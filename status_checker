@@ -1,0 +1,21 @@
+#!/bin/bash
+
+cd /var/games/minecraft/servers
+for oname in $(ls -d */)
+do
+name=$(echo $oname | cut -d '/' -f1)
+if $(/usr/games/minecraft/mineos_console.js -s $name up | tr -s ' ' | cut -d ' ' -f5); then
+			if [ -f /var/games/minecraft/servers/$name/logs/notup ]; then
+				rm /var/games/minecraft/servers/$name/logs/notup
+			fi
+		else
+			touch /var/games/minecraft/servers/$name/logs/notup
+			if [ -f /var/games/minecraft/servers/$name/logs/running ]; then
+				rm  /var/games/minecraft/servers/$name/logs/running
+				for i in $(ps -eaf | grep "$(ps -eaf | grep "/var/games/minecraft/servers/$name/logs" | tr -s ' ' | cut -d ' ' -f3)" | tr -s ' ' | cut -d ' ' -f2)
+				do
+					kill $i
+				done
+			fi
+		fi
+	done
