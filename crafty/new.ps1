@@ -92,6 +92,10 @@ if($infofld.value -eq "show") {
 		$string+="$_
 "
 	}
+	if ($string -eq "") {
+		$string="Your selected directory is empty.
+It is safe to deploy crafty here."
+	}
 	$infoFld.value=''
     $doc.getElementById("mapp").value=$string
 	$infoFld.value=''
