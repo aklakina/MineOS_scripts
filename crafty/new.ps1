@@ -86,19 +86,13 @@ if ($infoFld.value -eq "Kilepes") {
 	}
 if($infofld.value -eq "show") {
 	$doc.getElementById("mapp").value=''
-	$string=""
-	$rootPath="$HomeDir"
-	Get-ChildItem -Path $rootPath -Depth 0 -Directory|%{
+	$string=''
+	Get-ChildItem -Path $HomeDir -Depth 0 -Directory|%{
 		$string+="$_
 "
 	}
-	if ($string -eq "") {
-		$string="Your selected directory is empty.
-It is safe to deploy crafty here."
-	}
 	$infoFld.value=''
     $doc.getElementById("mapp").value=$string
-	$infoFld.value=''
 } elseif($infofld.value -eq "start") {
 	if ($doc.getElementById("python").Checked) {
 		./PythonInstaller.exe PrependPath=1 AssociateFiles=1 Include_lib=1 Include_pip=1 Include_tcltk=1 Include_tools=1 /quiet
