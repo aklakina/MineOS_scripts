@@ -86,6 +86,7 @@ if ($infoFld.value -eq "Kilepes") {
 	}
 if($infofld.value -eq "show") {
 	$doc.getElementById("mapp").value=''
+	$string=""
 	$rootPath="$HomeDir"
 	Get-ChildItem -Path $rootPath -Depth 0 -Directory|%{
 		$string+="$_
