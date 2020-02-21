@@ -14,14 +14,14 @@ let "max_mem=$max_mem1*93/100"
 cd /usr/games/minecraft
 (if [[ $memory -gt $max_mem ]]; then 
 echo "$(date +%c) $name $memory/$max_mem1   $memper%" >> /var/games/minecraft/log.txt
-./mineos_console.js -s $name stuff "say Memoria tultelitodes megelozese erdekeben 2 perc mulva uraindul a szerver, $memper%"
+./mineos_console.js -s $name stuff "say The server will restart in 2 minutes due to memory overload, $memper%"
 sleep 60
-./mineos_console.js -s $name stuff "say 1 perc mulva ujraindul"
+./mineos_console.js -s $name stuff "say 1 minute left"
 sleep 30
 for i in {0..29}
 do
 let "a=30-$i"
-./mineos_console.js -s $name stuff "say $a masodperc"
+./mineos_console.js -s $name stuff "say $a seconds"
 sleep 1
 done
 ./mineos_console.js -s $name restart
