@@ -15,6 +15,8 @@ These scripts are my self-made linux shell scripts to make server owners' life e
 
   starts and memory_out should be in /bin (or any other path) so the user can reach them easily.
   
+#just to skip a header
+
 # How do they work?
 	memory_controller.sh is a simple script that checks the server processes and the actual memory usage compared to the max memory given in the webui's java arguments. If it hits 93% (it is configurable in the script by editing the line let "max_mem=$max_mem1*93/100" with changing the 93), then it writes out a 2 minutes countdown. After the 2 minutes countdown it restarts the server.
 	start is a script which reads the data.txt (which you should create in the /var/games/minecraft/ directory and it should contain the servers' names divided by enter) and checks if they are up and running. If not this scripts starts them. This is only a failsafe because as i observed memory_controller.sh is not restarting them properly all the time and it rarely fails. ***the server names should not contain space***
