@@ -3,7 +3,7 @@ home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
 cd $home
 git fetch --all
 git reset --hard origin/master
-for a in $(cat crontabs.txt)
+for a in $(cat $home/crontabs.txt)
 do
 if cat /var/spool/cron/crontabs/root | grep -q $home/$a; then
 z=1
