@@ -1,0 +1,4 @@
+memory_out
+starts
+updater
+status_checker

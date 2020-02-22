@@ -11,4 +11,8 @@ else
 echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/$a" >> /var/spool/cron/crontabs/root
 fi
 done
+for a in $(cat $home/to_the_bin.txt)
+do
+	cp $home/$a /usr/local/bin/$a
+done
 chmod +x $(ls)
