@@ -3,12 +3,12 @@
 z=0
 if [[ "$1" == "" ]]; then
 	echo "These servers are part of the restart table:"
-	for i in $(cat /var/games/minecraft/data.txt)
+	for i in $(cat ./data.txt)
 	do
 		echo "$i"
 	done
 else
-	if cat /var/games/minecraft/data.txt | grep -w -q "$1"; then
+	if cat ./data.txt | grep -w -q "$1"; then
 		if [[ "$2" == "" ]]; then
 			echo " The $1 server is part of the restart table.${reset}"
 		else
@@ -19,15 +19,15 @@ else
 					do
 						read -n 1 k
 						if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
-							for a in $(cat /var/games/minecraft/data.txt)
+							for a in $(cat ./data.txt)
 							do
 								if [[ "$a" != "$1" ]]; then 
-									echo $a >> /var/games/minecraft/data1.txt
+									echo $a >> ./data1.txt
 								fi
 							done
-							rm /var/games/minecraft/data.txt
-							cp /var/games/minecraft/data1.txt /var/games/minecraft/data.txt
-							rm /var/games/minecraft/data1.txt
+							rm ./data.txt
+							cp ./data1.txt ./data.txt
+							rm ./data1.txt
 							echo "The $1 server is removed from the list. "
 							z=1
 						else
@@ -39,15 +39,15 @@ else
 					done
 				else
 					if [ "$3" == "y" ] || [ "$3" == "Y" ]; then
-						for a in $(cat /var/games/minecraft/data.txt)
+						for a in $(cat ./data.txt)
 						do
 							if [[ "$a" != "$1" ]]; then 
-								echo $a >> /var/games/minecraft/data1.txt
+								echo $a >> ./data1.txt
 							fi
 						done
-						rm /var/games/minecraft/data.txt
-						cp /var/games/minecraft/data1.txt /var/games/minecraft/data.txt
-						rm /var/games/minecraft/data1.txt
+						rm ./data.txt
+						cp ./data1.txt ./data.txt
+						rm ./data1.txt
 						echo "The $1 server is removed from the list. "
 					fi
 				fi
@@ -65,7 +65,7 @@ else
 			echo "The $1 server is not part of the restart table yet. "
 		else
 			if [[ "$2" == "add" ]]; then
-				echo $1 >>  /var/games/minecraft/data.txt
+				echo $1 >>  ./data.txt
 				echo "The $1 server is added to the restart table... If it does not restart properly or is shut down by any action it will automatically restart. "
 			else
 				if [[ "$2" == "remove" ]]; then

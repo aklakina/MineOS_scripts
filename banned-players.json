@@ -1,0 +1,10 @@
+[
+  {
+    "uuid": "18c82adf-5d6f-4590-8da7-fb65f9c572e1",
+    "name": "root",
+    "created": "2020-02-22 06:41:17 +0000",
+    "source": "Server",
+    "expires": "forever",
+    "reason": "Root user is automatically banned on every offline server due to security issues."
+  }
+]
