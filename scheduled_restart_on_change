@@ -60,7 +60,7 @@ do
 			else
 				mineos_console.js -s $n stuff "say Please define when do you want to restart the server! \n Give the delta time in seconds or the exact time as hh:mm (use 24h format)"
 				a=0
-				(while ($a -eq 0)
+				(while [[ $a -lt 1 ]]
 				do
 					if tail -F -n 0 /var/games/minecraft/servers/$n/logs/latest.log | grep -q ".*Server thread/INFO.* <.*> #"; then 
 						user=$(tail -n 1 /var/games/minecraft/servers/$n/logs/latest.log | cut -d '<' -f2 | cut -d '>' -f1)
