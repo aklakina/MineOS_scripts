@@ -51,11 +51,13 @@ do
 		if sha1sum -c /var/games/minecraft/servers/$n/server_prop.sha1 || [ $x==1 ] || [ $y==1 ]; then
 			z=1
 		else
-			if [ -f $home/default_timer.txt] && [[ cat $home/default_timer.txt !="" ]]; then
-				(./timer $n $(cat $home/default_time.txt))&
-				sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
-				$(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.data
-				$(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
+			if [ -f $home/default_timer.txt ]; then
+				if [[ $(cat $home/default_timer.txt) != "" ]]; then
+					(./timer $n $(cat $home/default_time.txt))&
+					sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
+					$(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.data
+					$(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
+				fi
 			else
 				mineos_console.js -s $n stuff "say Please define when do you want to restart the server! \n Give the delta time in seconds or the exact time as hh:mm (use 24h format)"
 				a=0
