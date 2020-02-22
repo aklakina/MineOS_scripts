@@ -8,7 +8,7 @@ do
 if cat /var/spool/cron/crontabs/root | grep -q $home/$a; then
 z=1
 else
-echo $home/$a >> /var/spool/cron/crontabs/root
+echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/$a" >> /var/spool/cron/crontabs/root
 fi
 done
 chmod +x $(ls)
