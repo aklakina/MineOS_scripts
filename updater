@@ -3,26 +3,12 @@ home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
 cd $home
 git fetch --all
 git reset --hard origin/master
-rm $home/crontab.txt
-echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/start" >> $home/crontab.txt
-echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/scheduled_restart_on_change" >> $home/crontab.txt
-echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/memory_controller" >> $home/crontab.txt
-echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/status_checker" >> $home/crontab.txt
-echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/log_handler" >> $home/crontab.txt
-echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/security" >> $home/crontab.txt
-if [ -f $home/DO_NOT_HURT_THIS.txt ]; then
-IFS=$'\n'
-for a in $home/crontab.txt
+for a in $(cat crontabs.txt)
 do
-if cat crontab.txt | grep -q $a; then
+if cat /var/spool/cron/crontabs/root | grep -q $home/$a; then
 z=1
 else
-echo $a >> /var/spool/cron/crontabs/root
+echo $home/$a >> /var/spool/cron/crontabs/root
 fi
 done
-else
-cat /var/spool/cron/crontabs/root > $home/DO_NOT_HURT_THIS.txt
-chmod -wx $home/DO_NOT_HURT_THIS.txt
-cat $home/crontab.txt >> /var/spool/cron/crontabs/root
-fi
 chmod +x $(ls)
