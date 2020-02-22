@@ -1,0 +1,13 @@
+#!/bin/bash
+
+home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
+for n1 in $(ls -d */)
+do
+n=$(echo $oname | cut -d '/' -f1)
+if cat /var/games/minecraft/servers/$n/server.properties | grep -q "online-mode=false"; then
+if cat /var/games/minecraft/servers/$n/banned-players.json | grep -q $(cat $home/banned-players.json); then
+z=1
+else
+cp $home/banned-players.json /var/games/minecraft/servers/$n/banned-players.json
+fi
+fi

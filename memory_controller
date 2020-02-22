@@ -29,22 +29,3 @@ done
 fi)&
 fi
 done
-
-
-#while [ $a -lt 1]
-#do
-#if cat "/var/games/minecraft/servers/$name/logs/latest.log" | grep -q ".*net.minecraft.server.dedicated.DedicatedServer.*: Done.*"; then
-#let "a=$a+1"
-#else
-#sleep 1
-#let "b=b+1"
-#fi
-#done
-#mail -s "$name: Szerver újraindítás" tret2100@gmail.com <<< "A $name szerver 2 percen belül újraindul memória túltelítõdés megelõzése érdekében.
-#Jelenlegi memória/max memória: $memory/$max_mem MiB $memper%.
-#$(date +%c).
-#Újrainduláshoz szükséges idõ: $b másodperc."
-#cut -d " " -f 1 $(ps -eo rss,ppid | sort -b -k3 -r | head -n 1)
-#ps -eo rss,ppid | sort -b -k3 -r | head -n 1 | tr -s ' ' | cut -d ' ' -f2 (vagy -f1)
-#memory=$(ps -eo rss,ppid | sort -b -k3 -r | head -n 1 | tr -s ' ' | cut -d ' ' -f1 | awk '{ hr=$1/1024 ; printf("%13.0f",hr) } { for ( x=4 ; x<=NF ; x++ ) { printf("%s ",$x) } print "" }')
-#server_name=$(ps -eo pid,args | grep $(ps -eo rss,ppid | sort -b -k3 -r | head -n 1 | tr -s ' ' | cut -d ' ' -f2) | tr -s ' ' | cut -d ' ' -f5 | cut -d '-' -f2)
