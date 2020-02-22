@@ -14,5 +14,6 @@ done
 for a in $(cat $home/to_the_bin.txt)
 do
 	cp $home/$a /usr/local/bin/$a
+	chmod +x /usr/local/bin/$a
 done
 chmod +x $(ls)
