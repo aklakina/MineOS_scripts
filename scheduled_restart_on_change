@@ -40,10 +40,10 @@ do
 				fi
 			done
 		else
-			$(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.data
+			echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.data
 		fi
 	else
-		$(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
+		echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
 	fi
 	
 	
@@ -70,8 +70,8 @@ do
 							(./timer $n "$(tail -n 1 /var/games/minecraft/servers/$n/logs/latest.log | cut -d '>' -f2 | cut -d '#' -f2 )")&
 							a=1
 							sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
-							$(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.data
-							$(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
+							echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.data
+							echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
 						else
 							mineos_console.js -s $n stuff "say You do not have permission to tell when to restart the server!"
 						fi
