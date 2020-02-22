@@ -9,6 +9,9 @@ if echo $2 | grep -q ":"; then
 else
 	s=$2
 fi
+if [[ $s -lt 1 ]]; then 
+let "s=$s+24*3600"
+fi
 for i in {1..$s}
 do
 	let "e=$s-$i"
