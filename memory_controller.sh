@@ -12,7 +12,8 @@ memper=1
 let "memper=$memory*100/$max_mem1"
 let "max_mem=$max_mem1*93/100"
 cd /usr/games/minecraft
-(if [[ $memory -gt $max_mem ]]; then 
+(if [[ $memory -gt $max_mem ]]; then
+touch /var/games/minecraft/servers/$name/logs/restarting
 echo "$(date +%c) $name $memory/$max_mem1   $memper%" >> /var/games/minecraft/log.txt
 ./mineos_console.js -s $name stuff "say The server will restart in 2 minutes due to memory overload, $memper%"
 sleep 60

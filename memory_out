@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ "$1" == "" ]]; then
-echo "szerver neve            jelenlegi memoria/max memoria"
+echo "Name of the server            current memory/max memory"
 IFS=$'\n'
 for server_name in $(ps -eo rss,ppid,pid,comm | grep "java")
 do

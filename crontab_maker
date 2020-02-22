@@ -1,0 +1,8 @@
+#!/bin/bash
+
+home=$pwd
+"0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/start" >> /var/spool/cron/crontabs/root
+"0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/scheduled_restart_on_change" >> /var/spool/cron/crontabs/root
+"0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/memory_controller.sh" >> /var/spool/cron/crontabs/root
+"0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/status_checker" >> /var/spool/cron/crontabs/root
+"0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/log_handler" >> /var/spool/cron/crontabs/root

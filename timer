@@ -1,14 +1,15 @@
 #!/bin/bash
 
 PATH="$PATH:/usr/games/minecraft"
-if $2 | grep -q ":"; then
-	let "h=$($2 | cut -d ':' -f1)-$(date +%H)"
-	let "m=$($2 | cut -d ':' -f2)-$(date +%M)"
+if echo $2 | grep -q ":"; then
+	s=0
+	let "h=$(echo $2 | cut -d ':' -f1)-$(date +%H)"
+	let "m=$(echo $2 | cut -d ':' -f2)-$(date +%M)"
 	let "s=$h*3600+$m*60"
 else
 	s=$2
 fi
-for i in [1..$s]
+for i in {1..$s}
 do
 	let "e=$s-$i"
 	let "h1=$e/3600"
@@ -32,5 +33,13 @@ do
 	if [[ $e==1 ]]; then
 		sleep 1
 		mineos_console.js -s $1 restart
+	fi
+	if [ -f /var/games/minecraft/servers/$name/logs/restarting]; then
+		break;
+	fi
+	mineos_console.js -s $1 stuff "/list"
+	if tail -n 1 /var/games/minecraft/servers/$1/logs/latest.log | cut -d 'o' -f1 | grep -q "0"; then
+		mineos_console.js -s $1 restart
+		break;
 	fi
 done
