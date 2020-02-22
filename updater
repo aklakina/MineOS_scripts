@@ -1,5 +1,10 @@
 #!/bin/bash
+if [ -f /usr/local/bin/home ]; then 
+home=$(cat /usr/local/bin/home)
+else
 home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
+echo $home > /usr/local/bin/home
+fi
 cd $home
 git fetch --all
 git reset --hard origin/master
