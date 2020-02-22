@@ -1,6 +1,6 @@
 #!/bin/bash
 
-home=$pwd
+home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
 z=0
 if [[ "$1" == "" ]]; then
 	echo "These servers are part of the restart table:"

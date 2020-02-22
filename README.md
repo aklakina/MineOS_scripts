@@ -2,10 +2,7 @@
 This repository contains my self-made scripts for MineOS node for linux made by hexparrot
 These scripts are my self-made linux shell scripts to make server owners' life easier and more comfortable.
 # A few words about my scripts:
-  There are a few crontab based scripts.
-    -memory_controller.sh
-    -start
-    -status_checker
+  You should first run the crontab_maker script first as root. It sets up every necessary crontab job for you.
 
   The data.txt is used in the start script and the starts is a command with arguments based editor for the data. (which needs some changes tho)
 
@@ -26,8 +23,13 @@ memory_out should be run by the actual user. It writes out current memory usage 
 
 mc_command_handler is used to make life "easier" in the view of server owners. This script tails the mc server log and if it catches any precise line that happens if you write #... in the minecraft chat then it tries to run the text after it as a linux command in the server and after that it pumps the output back to the minecraft chat. It does every command in your linux account name but because of that you have to log in to your minecraft server with your linux account name so this would work. I had to configure it that way so this script won't leave a black hole in your security system to like anyone who wants your server to their own. If you try to run a linux-side command as a non-linux user in mc then it will just drop back the text "you do not have the permission to run linux-side commands". Of course you can't give commands which waits for another input 'cause it simply will bug out and you will have to kill and restart the tailing process. If you are an expert enough then you could actually write a whole linux script using touch command. (try it on your own responsibility)
 
-status_checker is just controlling mc_command handler so it won't overflow your server with background jobs with infinite tailing processes. You should run this script first and schedule a crontab for it (HIGHLY RECOMMENDED).
+status_checker is just controlling mc_command handler so it won't overflow your server with background jobs with infinite tailing processes.
 
-# crafty
+Schedule a restart on change is exactly does that. If you change anything in the config/mods directory or change anything in the server.properties then this script asks for a time. You can give it as hh:mm 24-hour format and it does not work if you give a time that could only occour in another day. Like it is 12:45 and if you give it 11:00 it won't work. If everybody leaves the server the script will restart it automatically.
+
+Timer is the child script of the restart scheduler.
+
+Crontab_maker is a script that does every necessary crontabs for you so my scripts work properly. (run it as root or it won't work). 
+# crafty (it is in the crafty branch)
 Crafty is another project i am currently working on with the main team. It is similar to MineOS i just made an installer for it with a GUI based on internet explorer. The .exe has a few security issues so if you would not want to risk it then run the .ps1. It does the same you just need 1 more click to run it.
 Crafty wiki is linked in the installer.
