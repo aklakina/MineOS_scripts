@@ -47,7 +47,7 @@ do
 	
 	
 	
-	if [ -f /var/games/minecraft/servers/$n/server_prop.sha1 ] ||; then
+	if [ -f /var/games/minecraft/servers/$n/server_prop.sha1 ]; then
 		if sha1sum -c /var/games/minecraft/servers/$n/server_prop.sha1 || [ $x==1 ] || [ $y==1 ]; then
 			z=1
 		else
