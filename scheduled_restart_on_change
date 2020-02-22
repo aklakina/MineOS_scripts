@@ -5,7 +5,7 @@ PATH="$PATH:/usr/games/minecraft"
 cd /var/games/minecraft/servers
 for n1 in $(ls -d */)
 do
-	n=$(echo $oname | cut -d '/' -f1)
+	n=$(echo $n1 | cut -d '/' -f1)
 	if [ -f /var/games/minecraft/servers/$n/logs/mods.data ]; then
 		if [ -f /var/games/minecraft/servers/$n/logs/configs.data ]; then
 			for a in $(cat /var/games/minecraft/servers/$n/logs/mods.data)
