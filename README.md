@@ -29,7 +29,7 @@ Schedule a restart on change is exactly does that. If you change anything in the
 
 Timer is the child script of the restart scheduler.
 
-Crontab_maker is a script that does every necessary crontabs for you so my scripts work properly. (run it as root or it won't work). ***ONLY RUN IT ONCE***
+Crontab_maker is a script that does every necessary crontabs and permissions for you so my scripts work properly. (run it as root or it won't work). ***ONLY RUN IT ONCE***
 
 # crafty (it is in the crafty branch)
 Crafty is another project i am currently working on with the main team. It is similar to MineOS i just made an installer for it with a GUI based on internet explorer. The .exe has a few security issues so if you would not want to risk it then run the .ps1. It does the same you just need 1 more click to run it.
