@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ -f /usr/local/bin/home ]; then 
+	home=$(cat /usr/local/bin/home)
+else
+	home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
+	echo $home > /usr/local/bin/home
+fi
+chmod -wx /usr/local/bin/home
+for a in $(cat $home/crontabs.txt)
+do
+	if cat /var/spool/cron/crontabs/root | grep -q $home/$a; then
+		z=1
+	else
+		echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/$a" >> /var/spool/cron/crontabs/root
+	fi
+done
+for a in $(cat $home/to_the_bin.txt)
+do
+	cp $home/$a /usr/local/bin/$a
+	chmod +x /usr/local/bin/$a
+done
+chmod +x $(ls)
