@@ -1,6 +1,6 @@
 #!/bin/bash
 
-home=$(cat /usr/local/bin/home)
+home=/var/games/minecraft
 z=0
 if [[ "$1" == "" ]]; then
 	echo "These servers are part of the restart table:"

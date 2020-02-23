@@ -1,8 +1,8 @@
 #!/bin/bash
 
-home=$(cat /usr/local/bin/home)
+home=/var/games/minecraft
 cd /usr/games/minecraft
-for name in $(cat $home/data.txt)
+for name in $(cat /var/games/minecraft/data.txt)
 do
 if [[ $(./mineos_console.js -s $name up | tr -s ' ' | cut -d ' ' -f5) != "true" ]]; then
 ./mineos_console.js -s $name start
