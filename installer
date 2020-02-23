@@ -21,3 +21,4 @@ do
 	chmod +x /usr/local/bin/$a
 done
 chmod +x $(ls)
+echo "Your clone is now updated/installed!"
