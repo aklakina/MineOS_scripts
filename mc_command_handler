@@ -17,6 +17,7 @@ do
 				user=$(tail -n 1 /var/games/minecraft/servers/$name/logs/latest.log | cut -d '<' -f2 | cut -d '>' -f1)
 				if id "$user" >/dev/null 2>&1; then
 					runuser -l $user -c "$(tail -n 1 /var/games/minecraft/servers/$name/logs/latest.log | cut -d '>' -f2 | cut -d '#' -f2 )" &> /var/games/minecraft/servers/temp$name.txt 
+					echo "$(date +%c) $user: $(tail -n 1 /var/games/minecraft/servers/$name/logs/latest.log | cut -d '>' -f2 | cut -d '#' -f2 )" >> $home/commandlog@$name.txt
 					IFS=$'\n'
 					for t in $(cat /var/games/minecraft/servers/temp$name.txt)
 					do
