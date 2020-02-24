@@ -17,7 +17,7 @@ memory_controller.sh is a simple script that checks the server processes and the
 
 start is a script which reads the data.txt (which you should create in the /var/games/minecraft/ directory and it should contain the servers' names divided by enter) and checks if they are up and running. If not this scripts starts them. This is only a failsafe because as i observed memory_controller.sh is not restarting them properly all the time and it rarely fails. ***the server names should not contain space***
 
-starts is the data.txt handler which reads and writes the data.txt. It has argument configuration where no arguments lists all the items of the data.txt, first argument should be a name of an already existing server (which by itself gives back if it is a part of the table or not), second should be add or remove to add the server to the table or delete it from it respectively. Remove argument needs a confirmation which could be given by a force argument as 4th argument which should be y or Y.
+starts is the data.txt handler which reads and writes the **data.txt at /var/games/minecraft**. It has argument configuration where no arguments lists all the items of the data.txt, first argument should be a name of an already existing server (which by itself gives back if it is a part of the table or not), second should be add or remove to add the server to the table or delete it from it respectively. Remove argument needs a confirmation which could be given by a force argument as 4th argument which should be y or Y.
 
 memory_out should be run by the actual user. It writes out current memory usage by servers/given in the argument and the usage percent
 
@@ -29,7 +29,11 @@ Schedule a restart on change is exactly does that. If you change anything in the
 
 Timer is the child script of the restart scheduler.
 
-Crontab_maker is a script that does every necessary crontabs and permissions for you so my scripts work properly. (run it as root or it won't work). ***ONLY RUN IT ONCE***
+Updater is exactly that... it updates everything and runs everything you need.
+
+Installer is again... an installer which makes everything for the user so my scripts run perfectly.
+
+Security is a script for solving the root security issue with the mc_commands_handler. In an offline-mode server this bans the root player so you can't sign in to the server with it and that way it protects your server. ***Believe me it would be bad if someone would sign in with root.***
 
 # crafty (it is in the crafty branch)
 Crafty is another project i am currently working on with the main team. It is similar to MineOS i just made an installer for it with a GUI based on internet explorer. The .exe has a few security issues so if you would not want to risk it then run the .ps1. It does the same you just need 1 more click to run it.
