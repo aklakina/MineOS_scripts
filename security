@@ -6,6 +6,6 @@ for n1 in $(ls -d */)
 do
 n=$(echo $n1 | cut -d '/' -f1)
 if cat /var/games/minecraft/servers/$n/server.properties | grep -q "online-mode=false"; then
-cp $home/banned-players.json /var/games/minecraft/servers/$n/banned-players.json
+/usr/games/minecraft/mineos_console.js -s $n stuff "/ban root"
 fi
 done
