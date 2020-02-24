@@ -8,7 +8,7 @@ else
 	echo $home > /usr/local/bin/home
 fi
 chmod -wx /usr/local/bin/home
-echo "Do you want to install all of the components?(Y/N) \n"
+echo "Do you want to install all of the components?(Y/N)"
 while [[ z -lt 1 ]]
 do
 	read -n 1 k
@@ -32,13 +32,15 @@ do
 	else
 		if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
 			z=1
+			echo " "
 			echo "Please define which scripts do you want to crontab.(They will be ran every 5 minutes)"
 			for a in $(cat $home/crontabs.txt)
 			do
 				if cat /var/spool/cron/crontabs/root | grep -q $home/$a; then
 					t=1
 				else
-					echo "\n $a?(Y/N) \n"
+					echo " "
+					echo "$a?(Y/N)"
 					z=0
 					while [[ z -lt 1 ]]
 					do
@@ -54,10 +56,12 @@ do
 					done
 				fi
 			done
-			echo "\n Please define for each script if you want them in your default path folder so you will be able to call them just by their name in the terminal."
+			echo " "
+			echo "Please define for each script if you want them in your default path folder so you will be able to call them just by their name in the terminal."
 			for a in $(cat $home/to_the_bin.txt)
 			do
-				echo "\n $a?(Y/N) \n"
+				echo " "
+				echo "$a?(Y/N)"
 				z=0
 				while [[ z -lt 1 ]]
 				do
@@ -74,6 +78,7 @@ do
 				done
 			done
 			chmod +x $(ls)
+			echo " "
 			echo "Your clone is now updated/installed!"
 		fi
 	fi
