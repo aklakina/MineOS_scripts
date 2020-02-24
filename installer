@@ -32,29 +32,35 @@ do
 	else
 		if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
 			z=1
-			echo " "
-			echo "Please define which scripts do you want to crontab.(They will be ran every 5 minutes)"
-			for a in $(cat $home/crontabs.txt)
+			touch $home/missingcrontabs.txt
+			for a in  $(cat $home/crontabs.txt)
 			do
 				if cat /var/spool/cron/crontabs/root | grep -q $home/$a; then
 					t=1
 				else
-					echo " "
-					echo "$a?(Y/N)"
-					z=0
-					while [[ z -lt 1 ]]
-					do
-						read -n 1 k
-						if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
-							z=1
-							echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/$a" >> /var/spool/cron/crontabs/root
-						else
-							if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
-								z=1
-							fi
-						fi
-					done
+					echo $a >> $home/missingcrontabs.txt
 				fi
+			done
+			echo " "
+			echo "Please define which scripts do you want to crontab.(They will be ran every 5 minutes)"
+			for a in $(cat $home/missingcrontabs.txt)
+			do
+				echo " "
+				echo "$a?(Y/N)"
+				z=0
+				while [[ z -lt 1 ]]
+				do
+					read -n 1 k
+					if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
+						z=1
+						echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/$a" >> /var/spool/cron/crontabs/root
+					else
+						if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
+							z=1
+						fi
+					fi
+				done
+				rm $home/missingcrontabs.txt
 			done
 			echo " "
 			echo "Please define for each script if you want them in your default path folder so you will be able to call them just by their name in the terminal."
