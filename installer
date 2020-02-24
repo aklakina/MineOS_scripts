@@ -1,5 +1,6 @@
 #!/bin/bash
 
+z=0
 if [ -f /usr/local/bin/home ]; then 
 	home=$(cat /usr/local/bin/home)
 else
@@ -7,18 +8,73 @@ else
 	echo $home > /usr/local/bin/home
 fi
 chmod -wx /usr/local/bin/home
-for a in $(cat $home/crontabs.txt)
+echo "Do you want to install all of the components?\n"
+while [[ z -lt 1 ]]
 do
-	if cat /var/spool/cron/crontabs/root | grep -q $home/$a; then
+	read -n 1 k
+	if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
 		z=1
+		for a in $(cat $home/crontabs.txt)
+		do
+			if cat /var/spool/cron/crontabs/root | grep -q $home/$a; then
+				z=1
+			else
+				echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/$a" >> /var/spool/cron/crontabs/root
+			fi
+		done
+		for a in $(cat $home/to_the_bin.txt)
+		do
+			cp $home/$a /usr/local/bin/$a
+			chmod +x /usr/local/bin/$a
+		done
+		chmod +x $(ls)
+		echo "Your clone is now updated/installed!"
 	else
-		echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/$a" >> /var/spool/cron/crontabs/root
+		if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
+			z=1
+			echo "Please define which scripts do you want to crontab.(They will be ran every 5 minutes)"
+			for a in $(cat $home/crontabs.txt)
+			do
+				if cat /var/spool/cron/crontabs/root | grep -q $home/$a; then
+					t=1
+				else
+					echo "\n $a?(Y/N) \n"
+					z=0
+					while [[ z -lt 1 ]]
+					do
+						read -n 1 k
+						if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
+							z=1
+							echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/$a" >> /var/spool/cron/crontabs/root
+						else
+							if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
+								z=1
+							fi
+						fi
+					done
+				fi
+			done
+			echo "\n Please define for each script if you want them in your default path folder so you will be able to call them just by their name in the terminal."
+			for a in $(cat $home/to_the_bin.txt)
+			do
+				echo "\n $a?(Y/N) \n"
+				z=0
+				while [[ z -lt 1 ]]
+				do
+					read -n 1 k
+					if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
+						z=1
+						cp $home/$a /usr/local/bin/$a
+						chmod +x /usr/local/bin/$a
+					else
+						if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
+							z=1
+						fi
+					fi
+				done
+			done
+			chmod +x $(ls)
+			echo "Your clone is now updated/installed!"
+		fi
 	fi
 done
-for a in $(cat $home/to_the_bin.txt)
-do
-	cp $home/$a /usr/local/bin/$a
-	chmod +x /usr/local/bin/$a
-done
-chmod +x $(ls)
-echo "Your clone is now updated/installed!"
