@@ -8,7 +8,7 @@ else
 	echo $home > /usr/local/bin/home
 fi
 chmod -wx /usr/local/bin/home
-echo "Do you want to install all of the components?\n"
+echo "Do you want to install all of the components?(Y/N) \n"
 while [[ z -lt 1 ]]
 do
 	read -n 1 k
