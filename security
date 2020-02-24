@@ -11,3 +11,4 @@ else
 cp $home/banned-players.json /var/games/minecraft/servers/$n/banned-players.json
 fi
 fi
+done
