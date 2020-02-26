@@ -25,7 +25,11 @@ do
 					kortes=1
 					while [[ $kortes -lt 29 ]]
 					do
-						kort="$kort,$kortes"
+						if [[ $kort == "" ]]; then
+							kort=$kortes
+						else
+							kort="$kort,$kortes"
+						fi
 						let "kortes=$kortes+$korte"
 					done
 					echo "* * $kort * * $home/$a" >> /var/spool/cron/crontabs/root
@@ -71,7 +75,11 @@ do
 								read korte
 								while [[ $kortes -lt 29 ]]
 								do
-									kort="$kort,$kortes"
+									if [[ $kort == "" ]]; then
+										kort=$kortes
+									else
+										kort="$kort,$kortes"
+									fi
 									let "kortes=$kortes+$korte"
 								done
 								echo "* * $kort * * $home/$a" >> /var/spool/cron/crontabs/root
