@@ -9,7 +9,7 @@ do
 cd /var/games/minecraft/$m
 for n in $(ls -d */ | cut -d '/' -f1)
 do
-	change=$(stat $n | grep "Change:" | cut -d ":" -f2)
+	change=$(stat $n | grep "Change:" | cut -d ":" -f2 | cut -d ' ' -f1)
 	if [[ $(echo $change | cut -d '-' -f1) == $(date +%Y) ]]; then
 		if [[ $(echo $change | cut -d '-' -f2) == $(date +%m) ]]; then
 			if [[ $(echo $change | cut -d '-' -f3) == $(date +%d) ]]; then
