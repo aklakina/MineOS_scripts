@@ -20,11 +20,13 @@ do
 				z=1
 			else
 				if [[ $a == "auto_backup" ]]; then
-					echo "Please define which time interval should it run in the format of each x-th day"
+					echo "Please define which time interval should it run in the format of each x-th day. (only write the x)"
 					read korte
-					for i in {1..28..$korte}
+					kortes=1
+					while [[ $kortes -lt 29 ]]
 					do
-						kort="$kort,$i"
+						kort="$kort,$kortes"
+						let "kortes=$kortes+$korte"
 					done
 					echo "* * $kort * * $home/$a" >> /var/spool/cron/crontabs/root
 				else
@@ -67,9 +69,10 @@ do
 							if [[ $a == "auto_backup" ]]; then
 								echo "Please define which time interval should it run in the format of each x-th day"
 								read korte
-								for i in {1..28..$korte}
+								while [[ $kortes -lt 29 ]]
 								do
-									kort="$kort,$i"
+									kort="$kort,$kortes"
+									let "kortes=$kortes+$korte"
 								done
 								echo "* * $kort * * $home/$a" >> /var/spool/cron/crontabs/root
 							else
