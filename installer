@@ -19,7 +19,17 @@ do
 			if cat /var/spool/cron/crontabs/root | grep -q $home/$a; then
 				z=1
 			else
-				echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/$a" >> /var/spool/cron/crontabs/root
+				if [[ $a == "auto_backup" ]]; then
+					echo "Please define which time interval should it run in the format of each x-th day"
+					read korte
+					for i in {1..28..$korte}
+					do
+						kort="$kort,$i"
+					done
+					echo "* * $kort * * $home/$a" >> /var/spool/cron/crontabs/root
+				else
+					echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/$a" >> /var/spool/cron/crontabs/root
+				fi
 			fi
 		done
 		for a in $(cat $home/to_the_bin.txt)
@@ -55,14 +65,13 @@ do
 						if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
 							z=1
 							if [[ $a == "auto_backup" ]]; then
-								echo "* * 1,6,11,16,21,26 * * $home/$a" >> /var/spool/cron/crontabs/root
-								echo "Please define which time interval you want to back up your servers in days. Leave it blank for default. (The default is 5 days)"
-								read days
-								if [[ $days == "" ]]; then
-									t=1
-								else
-									echo $days &> $home/default_backup.txt
-								fi
+								echo "Please define which time interval should it run in the format of each x-th day"
+								read korte
+								for i in {1..28..$korte}
+								do
+									kort="$kort,$i"
+								done
+								echo "* * $kort * * $home/$a" >> /var/spool/cron/crontabs/root
 							else
 								echo "0,5,10,15,20,25,30,35,40,45,50,55 * * * * $home/$a" >> /var/spool/cron/crontabs/root
 								if [[ $a == "scheduled_restart_on_change" ]]; then

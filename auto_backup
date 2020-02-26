@@ -9,47 +9,47 @@ do
 	cd /var/games/minecraft/servers
 	for n in $(ls -d */ | cut -d '/' -f1)
 	do
-		change=$(stat /var/games/minecraft/$m/$n | grep "Change:" | cut -d ":" -f2 | cut -d ' ' -f1)
-		if [[ $change == "" ]]; then
-			mineos_console.js -s $n $m
-		else
-			if [[ $(echo $change | cut -d '-' -f1) == $(date +%Y) ]]; then
-				if [[ $(echo $change | cut -d '-' -f2) == $(date +%m) ]]; then
-					if [[ $(echo $change | cut -d '-' -f3) == $(date +%d) ]]; then
-						z=1
-					else
-						let "a=-$(echo $change | cut -d '-' -f3)+$(date +%d)"
-						if [[ $a -gt $t ]]; then
-							mineos_console.js -s $n $m
-						fi
-					fi
-				else
-					let "b=-$(echo $change | cut -d '-' -f2)+$(date +%m)"
-					if [[ $b -lt 2 ]]; then
-						let "c=-$(echo $change | cut -d '-' -f3)+30+$(date +%d)"
-						if [[ $c -gt $t ]]; then
-							mineos_console.js -s $n $m
-							fi
-					else
-						mineos_console.js -s $n $m
-					fi
-				fi
-			else
-				let "d=-$(echo $change | cut -d '-' -f1)+$(date +%Y)"
-				if [[ $d -lt 2 ]]; then
-					let "b=-$(echo $change | cut -d '-' -f2)+$(date +%m)+12"
-					if [[ $b -lt 2 ]]; then
-						let "c=-$(echo $change | cut -d '-' -f3)+30+$(date +%d)"
-						if [[ $c -gt $t ]]; then
-							mineos_console.js -s $n $m
-						fi
-					else
-						mineos_console.js -s $n $m
-					fi
-				else
-					mineos_console.js -s $n $m
-				fi
-			fi
-		fi
+#		change=$(stat /var/games/minecraft/$m/$n | grep "Change:" | cut -d ":" -f2 | cut -d ' ' -f1)
+#		if [[ $change == "" ]]; then
+		mineos_console.js -s $n $m
+#		else
+#			if [[ $(echo $change | cut -d '-' -f1) == $(date +%Y) ]]; then
+#				if [[ $(echo $change | cut -d '-' -f2) == $(date +%m) ]]; then
+#					if [[ $(echo $change | cut -d '-' -f3) == $(date +%d) ]]; then
+#						z=1
+#					else
+#						let "a=-$(echo $change | cut -d '-' -f3)+$(date +%d)"
+#						if [[ $a -gt $t ]]; then
+#							mineos_console.js -s $n $m
+#						fi
+#					fi
+#				else
+#					let "b=-$(echo $change | cut -d '-' -f2)+$(date +%m)"
+#					if [[ $b -lt 2 ]]; then
+#						let "c=-$(echo $change | cut -d '-' -f3)+30+$(date +%d)"
+#						if [[ $c -gt $t ]]; then
+#							mineos_console.js -s $n $m
+#							fi
+#					else
+#						mineos_console.js -s $n $m
+#					fi
+#				fi
+#			else
+#				let "d=-$(echo $change | cut -d '-' -f1)+$(date +%Y)"
+#				if [[ $d -lt 2 ]]; then
+#					let "b=-$(echo $change | cut -d '-' -f2)+$(date +%m)+12"
+#					if [[ $b -lt 2 ]]; then
+#						let "c=-$(echo $change | cut -d '-' -f3)+30+$(date +%d)"
+#						if [[ $c -gt $t ]]; then
+#							mineos_console.js -s $n $m
+#						fi
+#					else
+#						mineos_console.js -s $n $m
+#					fi
+#				else
+#					mineos_console.js -s $n $m
+#				fi
+#			fi
+#		fi
 	done
 done
