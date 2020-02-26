@@ -4,3 +4,4 @@ memory_controller
 status_checker
 log_handler
 security
+auto_backup
