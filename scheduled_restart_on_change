@@ -55,13 +55,23 @@ do
 		if sha1sum -c /var/games/minecraft/servers/$n/server_prop.sha1 | grep -q FAILED || [[ $x != 1 ]] || [[ $y != 1 ]]; then
 			if [ -f $home/default_timer.txt ]; then
 				if [[ $(cat $home/default_timer.txt) != "" ]]; then
-					($home/timer $n $(cat $home/default_timer.txt))&
-					sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
-					if [ -f /var/games/servers/$n/config ]; then
-					echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.data
-					fi
-					if [ -f /var/games/minecraft/servers/$n/mods ]; then
-					echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
+					if [ -f /var/games/minecraft/servers/$1/logs/timer_running ]; then
+						sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
+						if [ -f /var/games/servers/$n/config ]; then
+							echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.data
+						fi
+						if [ -f /var/games/minecraft/servers/$n/mods ]; then
+							echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
+						fi
+					else
+						($home/timer $n $(cat $home/default_timer.txt))&
+						sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
+						if [ -f /var/games/servers/$n/config ]; then
+							echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.data
+						fi
+						if [ -f /var/games/minecraft/servers/$n/mods ]; then
+							echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
+						fi
 					fi
 				else
 					mineos_console.js -s $n stuff "say Please define a default timer at $home/default_timer.txt in the format of seconds!"

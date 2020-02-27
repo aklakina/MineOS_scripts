@@ -1,6 +1,7 @@
 #!/bin/bash
 
 PATH="$PATH:/usr/games/minecraft"
+touch /var/games/minecraft/servers/$1/logs/timer_running
 if echo $2 | grep -q ":"; then
 	s=0
 	let "h=$(echo $2 | cut -d ':' -f1)-$(date +%H)"
