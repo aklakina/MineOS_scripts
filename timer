@@ -12,7 +12,8 @@ fi
 if [[ $s -lt 1 ]]; then 
 let "s=$s+24*3600"
 fi
-for i in {1..$s}
+let "s=$s+1"
+while [[ $i -lt $s ]]
 do
 	let "e=$s-$i"
 	let "h1=$e/3600"
@@ -38,7 +39,7 @@ do
 		sleep 1
 		mineos_console.js -s $1 restart
 	fi
-	if [ -f /var/games/minecraft/servers/$name/logs/restarting]; then
+	if [ -f /var/games/minecraft/servers/$name/logs/restarting ]; then
 		break;
 	fi
 	mineos_console.js -s $1 stuff "/list"
@@ -46,4 +47,5 @@ do
 		mineos_console.js -s $1 restart
 		break;
 	fi
+	let "i=$i+1"
 done
