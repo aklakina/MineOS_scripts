@@ -40,10 +40,14 @@ do
 				fi
 			done
 		else
-			echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.data
+			if [ -f /var/games/servers/$n/config ]; then
+				echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.data
+			fi
 		fi
 	else
-		echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
+		if [ -f /var/games/minecraft/servers/$n/mods ]; then
+			echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
+		fi
 	fi
 	
 	
