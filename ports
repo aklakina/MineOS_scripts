@@ -1,7 +1,7 @@
 #!/bin/bash
 
 home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
-if [[ $1 == -c ]]
+if [[ $1 == "-c" ]]
 	cd /var/games/minecraft/servers
 	for a in $home/used_ports.txt
 	do
