@@ -48,7 +48,7 @@ do
 		break
 	fi
 	mineos_console.js -s $1 stuff "/list"
-	if tail -n 1 /var/games/minecraft/servers/$1/logs/latest.log | cut -d 'o' -f1 | grep -q "0"; then
+	if tail -n 1 /var/games/minecraft/servers/$1/logs/latest.log | cut -d 'o' -f1 | cut -d "r" -f6 | grep -q "0"; then
 		mineos_console.js -s $1 restart
 		break
 	fi
