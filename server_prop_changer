@@ -1,0 +1,52 @@
+#!/bin/bash
+
+home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
+while (true)
+do
+	cd /var/games/minecraft/servers/
+	for n in $(ls -d */ | cut -d '/' -f1)
+	do
+		if [ -f /var/games/minecraft/servers/$n/logs/ran ]; then
+			z=1
+		else
+			bool=0
+			while [[ bool -lt 1 ]]
+			do
+				port=$(shuf -i 25500-25600 -n 1)
+				if netstat -tulpn | grep LISTEN | grep -q $port || cat $home/used_ports.txt | grep -q $port; then
+					bool=0
+				else
+					bool=1
+				fi
+			done
+			for a in $(cat /var/games/minecraft/servers/$n/server.properties)
+			do
+				if [[ $a == "server-port.*" ]]; then
+					a="$( echo $a | cut -d "=" -f1)=$port"
+					echo $a >> /var/games/minecraft/servers/$n/server.temp
+					serverport="$n--$port"
+					echo $serverport >> $home/used_ports.txt
+				else
+					if echo $a | cut -d "=" -f1 | grep -q $home/default_props.txt; then
+						cat $home/default_props.txt | grep $( echo $a | cut -d '=' -f1) >> /var/games/minecraft/servers/$n/server.temp
+					else
+						echo $a >> /var/games/minecraft/servers/$n/server.temp
+					fi
+				fi
+			done
+			for a in $(cat $home/default_props.txt)
+			do
+				if echo $a | cut -d '=' -f1 | grep -q /var/games/minecraft/servers/$n/server.temp; then
+					z=1
+				else
+					echo $a >> /var/games/minecraft/servers/$n/server.temp
+				fi
+			done
+			rm /var/games/minecraft/servers/$n/server.properties
+			cp /var/games/minecraft/servers/$n/server.temp /var/games/minecraft/servers/$n/server.properties
+			rm /var/games/minecraft/servers/$n/server.temp
+			chmod +rwx /var/games/minecraft/servers/$n/server.properties
+		fi
+	done
+	sleep 1
+done

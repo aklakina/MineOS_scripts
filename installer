@@ -1,6 +1,7 @@
 #!/bin/bash
 
 z=0
+IFS=$'\n'
 if [ -f /usr/local/bin/home ]; then 
 	home=$(cat /usr/local/bin/home)
 else
@@ -128,6 +129,43 @@ do
 			chmod +x $(ls)
 			echo " "
 			echo "Your clone is now updated/installed!"
+			echo "Do you want to start mc_command_handler? (If it already ran then this will restart it) [Y/N]"
+			z=0
+			while [[ z -lt 1 ]]
+			do
+				read -n 1 k
+				if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
+					z=1
+					for i in $(ps -eaf | grep "$(ps -eaf | grep "/var/games/minecraft/servers/.*/logs" | tr -s ' ' | cut -d ' ' -f3)" | tr -s ' ' | cut -d ' ' -f2)
+					do
+						kill $i
+					done
+					kill $(ps -eaf | grep "/bin/bash .*/mc_command_handler" | tr -s ' ' | cut -d ' ' -f2)
+					($home/mc_command_handler)&
+				else
+					if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
+						z=1
+					fi
+				fi
+			done
+			echo "Do you want to start server_prop_changer? (If it already ran then this will restart it) [Y/N]"
+			z=0
+			while [[ z -lt 1 ]]
+			do
+				read -n 1 k
+				if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
+					z=1
+					for i in $(ps -eaf | grep "$(ps -eaf | grep "/var/games/minecraft/servers/.*/ran" | tr -s ' ' | cut -d ' ' -f3)" | tr -s ' ' | cut -d ' ' -f2)
+					do
+						kill $i
+					done
+					($home/server_prop_changer)&
+				else
+					if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
+						z=1
+					fi
+				fi
+			done
 		fi
 	fi
 done

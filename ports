@@ -1,0 +1,22 @@
+#!/bin/bash
+
+home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
+if [[ $1 == -c ]]
+	cd /var/games/minecraft/servers
+	for a in $home/used_ports.txt
+	do
+		if echo $a | cut -d "-" -f1 | grep -q $(ls -d */ | cut -d "/" -f1); then
+			echo $a >> temp_ports.txt
+		fi
+	done
+	rm $home/used_ports.txt
+	cp $home/temp_ports.txt $home/used_ports.txt
+	rm $home/temp_ports.txt
+	chmod +rw $home/used_ports.txt
+else
+	echo "These are the server names with their ports:"
+	for i in $(cat $home/used_ports.txt)
+	do
+		echo $i
+	done
+fi
