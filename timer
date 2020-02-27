@@ -40,12 +40,12 @@ do
 		mineos_console.js -s $1 restart
 	fi
 	if [ -f /var/games/minecraft/servers/$name/logs/restarting ]; then
-		break;
+		break
 	fi
 	mineos_console.js -s $1 stuff "/list"
 	if tail -n 1 /var/games/minecraft/servers/$1/logs/latest.log | cut -d 'o' -f1 | grep -q "0"; then
 		mineos_console.js -s $1 restart
-		break;
+		break
 	fi
 	let "i=$i+1"
 done
