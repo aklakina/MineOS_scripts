@@ -22,9 +22,6 @@ do
 	let "e=$s-$i"
 	let "h1=$e/3600"
 	let "m1=$e/60"
-	echo $e
-	echo $h1
-	echo $m1
 	if [ h1==h2 ] && [ m1==m2 ]; then
 		z=1
 	else 
@@ -41,7 +38,7 @@ do
 	if [[ $e -lt 60 ]]; then
 		mineos_console.js -s $1 stuff "say The server will restart in $e seconds!"
 	fi
-	if [[ $e==1 ]]; then
+	if [[ $e -eq 1 ]]; then
 		mineos_console.js -s $1 restart
 	fi
 	if [ -f /var/games/minecraft/servers/$name/logs/restarting ]; then
@@ -55,3 +52,4 @@ do
 	sleep 1
 	let "i=$i+1"
 done
+rm /var/games/minecraft/servers/$1/logs/timer_running
