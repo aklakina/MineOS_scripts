@@ -22,7 +22,7 @@ do
 			for a in $(cat /var/games/minecraft/servers/$n/server.properties)
 			do
 				if [[ $a == "server-port.*" ]]; then
-					a="$( echo $a | cut -d "=" -f1)=$port"
+					a="$(echo $a | cut -d "=" -f1)=$port"
 					echo $a >> /var/games/minecraft/servers/$n/server.temp
 					serverport="$n--$port"
 					echo $serverport >> $home/used_ports.txt
