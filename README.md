@@ -35,6 +35,12 @@ Installer is again... an installer which makes everything for the user so my scr
 
 Security is a script for solving the root security issue with the mc_commands_handler. In an offline-mode server this bans the root player so you can't sign in to the server with it and that way it protects your server. ***Believe me it would be bad if someone would sign in with root.***
 
+Auto_backup is again... that. Well seems like i am bad at naming things. ***May God have mercy on my future child.*** So anyway. This thing goes to the backup and archive folders and checks every directories' age and if they are older then 5 days (the default but you can change this during installation) the script gives the server the backup and archive command.
+
+Server_prop_changer ***IS WORK IN PROGRESS*** Please do not try to open it or you will need to restart your server.
+
+ports writes out which server use which port.
+
 # crafty (it is in the crafty branch)
 Crafty is another project i am currently working on with the main team. It is similar to MineOS i just made an installer for it with a GUI based on internet explorer. The .exe has a few security issues so if you would not want to risk it then run the .ps1. It does the same you just need 1 more click to run it.
 Crafty wiki is linked in the installer.
