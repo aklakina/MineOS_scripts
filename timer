@@ -30,7 +30,7 @@ do
 			h2=$h1
 		fi
 	fi
-	if [[ $m1 -eq $m2 ]] && [[ $e -lt 3600 ]]; then
+	if [[ $m1 -eq $m2 ]] && [[ $e -gt 3600 ]]; then
 		z=1
 	else
 		if [[ $e -gt 60 ]]; then
