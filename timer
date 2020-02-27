@@ -14,6 +14,7 @@ if [[ $s -lt 1 ]]; then
 let "s=$s+24*3600"
 fi
 let "s=$s+1"
+i=1
 while [[ $i -lt $s ]]
 do
 	let "e=$s-$i"
