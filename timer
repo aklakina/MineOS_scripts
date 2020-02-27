@@ -24,9 +24,10 @@ do
 			mineos_console.js -s $1 stuff "say The server will restart in $h1 hours!"
 			h2=$h1
 		else
-		if [[ $e -gt 60 ]]; then
-			mineos_console.js -s $1 stuff "say The server will restart in $m1 minutes!"
-			m2=$m1
+			if [[ $e -gt 60 ]]; then
+				mineos_console.js -s $1 stuff "say The server will restart in $m1 minutes!"
+				m2=$m1
+			fi
 		fi
 	fi
 	if [[ $e -lt 60 ]]; then
