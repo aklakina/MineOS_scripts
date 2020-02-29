@@ -10,45 +10,36 @@ do
 		if [ -f /var/games/minecraft/servers/$n/logs/mods.data ]; then
 			if [ -f /var/games/servers/$n/config ]; then
 				if [ -f /var/games/minecraft/servers/$n/logs/configs.data ]; then
-					for a in $(cat /var/games/minecraft/servers/$n/logs/mods.data)
+					x=0
+					for b in $(ls -lh /var/games/minecraft/servers/$n/mods)
 					do
-						x=0
-						for b in $(ls -lh /var/games/minecraft/servers/$n/mods)
-						do
-							if [ $a==$b ]; then
-								x=1
-							else
-								let "x=$x+1"
-							fi
-						done
-						if [ $x==0 ]; then
-							break;
+						if cat /var/games/minecraft/servers/$n/logs/mods.data | grep -q $b; then
+							x=1
+						else
+							x=0
+							break
 						fi
 					done
 					
-				for c in $(cat /var/games/minecraft/servers/$n/logs/configs.data)
+				x=0
+					for b in $(ls -lh /var/games/minecraft/servers/$n/config)
 					do
-						y=0
-						for d in $(ls -lh /var/games/minecraft/servers/$n/config)
-						do
-							if [ $c==$d ]; then
-								y=1
-							else
-								let "y=$y+1"
-							fi
-						done
-						if [ $y==0 ]; then
-							break;
+						if cat /var/games/minecraft/servers/$n/logs/configs.data | grep -q $b; then
+							y=1
+						else
+							y=0
+							break
 						fi
 					done
 				else
 					echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.data
 				fi
-			else
-					echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
 			fi
+		else
+			echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
 		fi
 	fi
+
 	
 	
 	if [ -f /var/games/minecraft/servers/$n/server_prop.sha1 ]; then
@@ -64,7 +55,8 @@ do
 							echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.data
 						fi
 					else
-						($home/timer $n $(cat $home/default_timer.txt))&
+						#($home/timer $n $(cat $home/default_timer.txt))&
+						echo "nem biztos hogy oke"
 						sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
 						if [ -f /var/games/servers/$n/config ]; then
 							echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.data
@@ -79,6 +71,8 @@ do
 			else
 				mineos_console.js -s $n stuff "say Please define a default timer at $home/default_timer.txt in the format of seconds!"
 			fi
+		else
+		 echo "jo igy mar talan oke"
 		fi
 	else
 		sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
