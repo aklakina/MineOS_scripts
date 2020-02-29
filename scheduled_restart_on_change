@@ -14,7 +14,7 @@ do
 				if [ -f /var/games/minecraft/servers/$n/logs/configs.txt ]; then
 					for b in $(ls -lh /var/games/minecraft/servers/$n/mods)
 					do
-						if cat /var/games/minecraft/servers/$n/logs/mods.txt | grep -q $b; then
+						if cat /var/games/minecraft/servers/$n/logs/mods.txt | grep -q "$b"; then
 							x=1
 						else
 							x=0
@@ -24,7 +24,7 @@ do
 					echo $x
 					for b in $(ls -lh /var/games/minecraft/servers/$n/config)
 					do
-						if cat /var/games/minecraft/servers/$n/logs/configs.txt | grep -q $b; then
+						if cat /var/games/minecraft/servers/$n/logs/configs.txt | grep -q "$b"; then
 							y=1
 						else
 							y=0
