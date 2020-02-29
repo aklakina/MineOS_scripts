@@ -8,7 +8,7 @@ for n1 in $(ls -d */)
 do
 #	x=0
 #	y=0
-#	n=$(echo $n1 | cut -d '/' -f1)
+	n=$(echo $n1 | cut -d '/' -f1)
 #	if [ -d /var/games/minecraft/servers/$n/mods ]; then
 #		if [ -f /var/games/minecraft/servers/$n/logs/mods.txt ]; then
 #			if [ -d /var/games/minecraft/servers/$n/config ]; then
