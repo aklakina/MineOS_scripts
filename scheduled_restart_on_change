@@ -7,9 +7,9 @@ for n1 in $(ls -d */)
 do
 	n=$(echo $n1 | cut -d '/' -f1)
 	if [ -f /var/games/minecraft/servers/$n/mods ]; then
-		if [ -f /var/games/minecraft/servers/$n/logs/mods.data ]; then
+		if [ -f /var/games/minecraft/servers/$n/logs/mods.txt ]; then
 			if [ -f /var/games/servers/$n/config ]; then
-				if [ -f /var/games/minecraft/servers/$n/logs/configs.data ]; then
+				if [ -f /var/games/minecraft/servers/$n/logs/configs.txt ]; then
 					x=0
 					for b in $(ls -lh /var/games/minecraft/servers/$n/mods)
 					do
@@ -33,10 +33,14 @@ do
 					done
 					echo $y
 				else
+					touch /var/games/minecraft/servers/$n/logs/configs.txt
+					chmod +rw /var/games/minecraft/servers/$n/logs/configs.txt
 					echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.txt
 				fi
 			fi
 		else
+			touch /var/games/minecraft/servers/$n/logs/mods.txt
+			chmod +rw /var/games/minecraft/servers/$n/logs/mods.txt
 			echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.txt
 		fi
 	fi
