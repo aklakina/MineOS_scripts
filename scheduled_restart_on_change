@@ -13,7 +13,7 @@ do
 		if [ -f /var/games/minecraft/servers/$n/logs/mods.txt ]; then
 			if [ -d /var/games/minecraft/servers/$n/config ]; then
 				if [ -f /var/games/minecraft/servers/$n/logs/configs.txt ]; then
-					for b in $(ls -lh /var/games/minecraft/servers/$n/mods)
+					for b in $(ls -la /var/games/minecraft/servers/$n/mods)
 					do
 						if cat /var/games/minecraft/servers/$n/logs/mods.txt | grep -q "$b"; then
 							x=1
@@ -23,7 +23,7 @@ do
 						fi
 					done
 					echo $x
-					for b in $(ls -lh /var/games/minecraft/servers/$n/config)
+					for b in $(ls -la /var/games/minecraft/servers/$n/config)
 					do
 						if cat /var/games/minecraft/servers/$n/logs/configs.txt | grep -q "$b"; then
 							y=1
@@ -36,13 +36,13 @@ do
 				else
 					touch /var/games/minecraft/servers/$n/logs/configs.txt
 					chmod +rw /var/games/minecraft/servers/$n/logs/configs.txt
-					echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.txt
+					echo $(ls -la /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.txt
 				fi
 			fi
 		else
 			touch /var/games/minecraft/servers/$n/logs/mods.txt
 			chmod +rw /var/games/minecraft/servers/$n/logs/mods.txt
-			echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.txt
+			echo $(ls -la /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.txt
 		fi
 	fi
 
@@ -55,20 +55,20 @@ do
 					if [ -f /var/games/minecraft/servers/$1/logs/timer_running ]; then
 						sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
 						if [ -d /var/games/servers/$n/config ]; then
-							echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.txt
+							echo $(ls -la /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.txt
 						fi
 						if [ -d /var/games/minecraft/servers/$n/mods ]; then
-							echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.txt
+							echo $(ls -la /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.txt
 						fi
 					else
 						#($home/timer $n $(cat $home/default_timer.txt))&
 						echo "nem biztos hogy oke"
 						sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
 						if [ -d /var/games/servers/$n/config ]; then
-							echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.txt
+							echo $(ls -la /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.txt
 						fi
 						if [ -d /var/games/minecraft/servers/$n/mods ]; then
-							echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.txt
+							echo $(ls -la /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.txt
 						fi
 					fi
 				else
