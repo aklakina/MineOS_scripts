@@ -55,7 +55,7 @@ do
 					if [ -f /var/games/minecraft/servers/$1/logs/timer_running ]; then
 						sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
 						if [ -d /var/games/servers/$n/config ]; then
-							sha1sum /var/games/servers/$n/config/* | sha1sum > /var/games/minecraft/servers/$n/server_configs.sha1
+							sha1sum /var/games/minecraft/servers/$n/config/* | sha1sum > /var/games/minecraft/servers/$n/server_configs.sha1
 						fi
 						if [ -d /var/games/minecraft/servers/$n/mods ]; then
 							sha1sum /var/games/minecraft/servers/$n/mods/* | sha1sum > /var/games/minecraft/servers/$n/server_mods.sha1
@@ -64,8 +64,8 @@ do
 						#($home/timer $n $(cat $home/default_timer.txt))&
 						echo "nem biztos hogy oke"
 						sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
-						if [ -d /var/games/servers/$n/config ]; then
-							sha1sum /var/games/servers/$n/config/* | sha1sum > /var/games/minecraft/servers/$n/server_configs.sha1
+						if [ -d /var/games/minecraft/servers/$n/config ]; then
+							sha1sum /var/games/minecraft/servers/$n/config/* | sha1sum > /var/games/minecraft/servers/$n/server_configs.sha1
 						fi
 						if [ -d /var/games/minecraft/servers/$n/mods ]; then
 							sha1sum /var/games/minecraft/servers/$n/mods/* | sha1sum > /var/games/minecraft/servers/$n/server_mods.sha1
@@ -83,6 +83,6 @@ do
 	else
 		sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
 		sha1sum /var/games/minecraft/servers/$n/mods/* | sha1sum > /var/games/minecraft/servers/$n/server_mods.sha1
-		sha1sum /var/games/servers/$n/config/* | sha1sum > /var/games/minecraft/servers/$n/server_configs.sha1
+		sha1sum /var/games/minecraft/servers/$n/config/* | sha1sum > /var/games/minecraft/servers/$n/server_configs.sha1
 	fi
 done
