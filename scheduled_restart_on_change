@@ -3,6 +3,7 @@
 home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
 PATH="$PATH:/usr/games/minecraft"
 cd /var/games/minecraft/servers
+IFS=$'\n'
 for n1 in $(ls -d */)
 do
 	x=0
