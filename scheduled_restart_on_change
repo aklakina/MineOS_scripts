@@ -5,12 +5,13 @@ PATH="$PATH:/usr/games/minecraft"
 cd /var/games/minecraft/servers
 for n1 in $(ls -d */)
 do
+	x=0
+	y=0
 	n=$(echo $n1 | cut -d '/' -f1)
-	if [ -f /var/games/minecraft/servers/$n/mods ]; then
+	if [ -d /var/games/minecraft/servers/$n/mods ]; then
 		if [ -f /var/games/minecraft/servers/$n/logs/mods.txt ]; then
-			if [ -f /var/games/servers/$n/config ]; then
+			if [ -d /var/games/servers/$n/config ]; then
 				if [ -f /var/games/minecraft/servers/$n/logs/configs.txt ]; then
-					x=0
 					for b in $(ls -lh /var/games/minecraft/servers/$n/mods)
 					do
 						if cat /var/games/minecraft/servers/$n/logs/mods.txt | grep -q $b; then
@@ -21,7 +22,6 @@ do
 						fi
 					done
 					echo $x
-					y=0
 					for b in $(ls -lh /var/games/minecraft/servers/$n/config)
 					do
 						if cat /var/games/minecraft/servers/$n/logs/configs.txt | grep -q $b; then
@@ -53,20 +53,20 @@ do
 				if [[ $(cat $home/default_timer.txt) != "" ]]; then
 					if [ -f /var/games/minecraft/servers/$1/logs/timer_running ]; then
 						sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
-						if [ -f /var/games/servers/$n/config ]; then
+						if [ -d /var/games/servers/$n/config ]; then
 							echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.txt
 						fi
-						if [ -f /var/games/minecraft/servers/$n/mods ]; then
+						if [ -d /var/games/minecraft/servers/$n/mods ]; then
 							echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.txt
 						fi
 					else
 						#($home/timer $n $(cat $home/default_timer.txt))&
 						echo "nem biztos hogy oke"
 						sha1sum /var/games/minecraft/servers/$n/server.properties > /var/games/minecraft/servers/$n/server_prop.sha1
-						if [ -f /var/games/servers/$n/config ]; then
+						if [ -d /var/games/servers/$n/config ]; then
 							echo $(ls -lh /var/games/minecraft/servers/$n/config) > /var/games/minecraft/servers/$n/logs/configs.txt
 						fi
-						if [ -f /var/games/minecraft/servers/$n/mods ]; then
+						if [ -d /var/games/minecraft/servers/$n/mods ]; then
 							echo $(ls -lh /var/games/minecraft/servers/$n/mods) > /var/games/minecraft/servers/$n/logs/mods.txt
 						fi
 					fi
