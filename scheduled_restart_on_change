@@ -10,7 +10,7 @@ do
 	n=$(echo $n1 | cut -d '/' -f1)
 	if [ -d /var/games/minecraft/servers/$n/mods ]; then
 		if [ -f /var/games/minecraft/servers/$n/logs/mods.txt ]; then
-			if [ -d /var/games/servers/$n/config ]; then
+			if [ -d /var/games/minecraft/servers/$n/config ]; then
 				if [ -f /var/games/minecraft/servers/$n/logs/configs.txt ]; then
 					for b in $(ls -lh /var/games/minecraft/servers/$n/mods)
 					do
