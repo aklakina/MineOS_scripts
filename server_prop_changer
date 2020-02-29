@@ -46,6 +46,7 @@ do
 			cp /var/games/minecraft/servers/$n/server.temp /var/games/minecraft/servers/$n/server.properties
 			rm /var/games/minecraft/servers/$n/server.temp
 			chmod +rwx /var/games/minecraft/servers/$n/server.properties
+			touch /var/games/minecraft/servers/$n/logs/ran
 		fi
 	done
 	sleep 1
