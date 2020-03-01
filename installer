@@ -129,24 +129,24 @@ do
 			chmod +x $(ls)
 			echo " "
 			echo "Your clone is now updated/installed!"
-			#echo "Do you want to start server_prop_changer? (If it already ran then this will restart it) [Y/N]"
-			#z=0
-			#while [[ z -lt 1 ]]
-			#do
-			#	read -n 1 k
-			#	if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
-			#		z=1
-			#		for i in $(ps -eaf | grep "$(ps -eaf | grep "/var/games/minecraft/servers/.*/ran" | tr -s ' ' | cut -d ' ' -f3)" | tr -s ' ' | cut -d ' ' -f2)
-			#		do
-			#			kill $i
-			#		done
-			#		($home/server_prop_changer)&
-			#	else
-			#		if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
-			#			z=1
-			#		fi
-			#	fi
-			#done
+			echo "Do you want to start server_prop_changer? (If it already ran then this will restart it) [Y/N]"
+			z=0
+			while [[ z -lt 1 ]]
+			do
+				read -n 1 k
+				if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
+					z=1
+					for i in $(ps -eaf | grep "$(ps -eaf | grep "/var/games/minecraft/servers/.*/ran" | tr -s ' ' | cut -d ' ' -f3)" | tr -s ' ' | cut -d ' ' -f2)
+					do
+						kill $i
+					done
+					($home/server_prop_changer)&
+				else
+					if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
+						z=1
+					fi
+				fi
+			done
 		fi
 	fi
 done
