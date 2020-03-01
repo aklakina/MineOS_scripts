@@ -1,6 +1,7 @@
 #!/bin/bash
 
 home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
+IFS=$'\n'
 while (true)
 do
 	cd /var/games/minecraft/servers/
@@ -19,6 +20,7 @@ do
 					bool=1
 				fi
 			done
+			echo $port
 			for a in $(cat /var/games/minecraft/servers/$n/server.properties)
 			do
 				if [[ $a == "server-port.*" ]]; then

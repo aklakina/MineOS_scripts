@@ -44,6 +44,7 @@ do
 	fi
 	if [[ $e -eq 1 ]]; then
 		mineos_console.js -s $1 restart
+		break
 	fi
 	if [ -f /var/games/minecraft/servers/$name/logs/restarting ]; then
 		break
