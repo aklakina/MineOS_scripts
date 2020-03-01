@@ -151,6 +151,9 @@ do
 		fi
 	fi
 done
+echo "Please write here your ip"
+read k
+echo "server-ip=$k" >> $home/default_props.txt
 echo "Do you want to start server_prop_changer? (If it already ran then this will restart it) [Y/N]"
 z=0
 while [[ z -lt 1 ]]
@@ -169,6 +172,3 @@ do
 		fi
 	fi
 done
-echo "Please write here your ip"
-read k
-echo "server-ip=$k" >> $home/default_props.txt
