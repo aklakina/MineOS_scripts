@@ -14,6 +14,7 @@ done
 cd /var/games/minecraft/servers
 for n in $(ls -d */ | cut -d '/' -f1)
 do
+	mkdir $backup_path/$n
 	cd $backup_path/$n
 	let "p1=$p+1"
 	if ls | grep -q "$p"; then
@@ -25,17 +26,20 @@ do
 			let "i=$i+1"
 		done
 		rm -rf $backup_path/$n/$p1
+		mkdir $backup_path/$n/1
 		tar -czf $backup_path/$n/1/$n.tar.gz /var/games/minecraft/servers/$n
 	else
-		a=1
-		while [[ $a -lt $p1 ]]
+		a=5
+		while [[ $a -gt 0 ]]
 		do
 			if ls | grep -q $a; then
 				z=1
 			else
+				mkdir $backup_path/$n/$a
 				tar -czf $backup_path/$n/$a/$n.tar.gz /var/games/minecraft/servers/$n
+				break
 			fi
-			let "a=$a+1"
+			let "a=$a-1"
 		done
 	fi
 	#if [[ $change == "" ]]; then
