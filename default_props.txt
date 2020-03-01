@@ -7,4 +7,3 @@ max-players=20
 max-world-size=29999984
 view-distance=15
 level-seed=
-server-ip=0.0.0.0
