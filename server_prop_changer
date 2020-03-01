@@ -26,6 +26,7 @@ do
 				echo $a
 				if echo $a | grep -q "server-port"; then
 					a="$(echo $a | cut -d "=" -f1)=$port"
+					echo $a
 					echo $a >> /var/games/minecraft/servers/$n/server.temp
 					serverport="$n--$port"
 					echo $serverport >> $home/used_ports.txt
