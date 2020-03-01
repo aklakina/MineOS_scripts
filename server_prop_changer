@@ -23,10 +23,14 @@ if [[ $1 == "-f" ]]; then
 				a="$(echo $a | cut -d "=" -f1)=$port"
 				echo $a >> /var/games/minecraft/servers/$n/server.temp
 				serverport="$n--$port"
-				echo $serverport >> $home/used_ports.txt
-				iptables -A INPUT -p tcp -m tcp --dport $port -j ACCEPT
-				iptables-save > /etc/iptables-rules
-				iptables-restore < /etc/iptables-rules
+				if iptables --list | grep -q "Chain INPUT (policy ACCEPT)"; then
+					z=1
+				else
+					echo $serverport >> $home/used_ports.txt
+					iptables -A INPUT -p tcp -m tcp --dport $port -j ACCEPT
+					iptables-save > /etc/iptables-rules
+					iptables-restore < /etc/iptables-rules
+				fi
 			else
 				if cat $home/default_props.txt | grep -q $(echo $a | cut -d "=" -f1); then
 					cat $home/default_props.txt | grep $( echo $a | cut -d '=' -f1) >> /var/games/minecraft/servers/$n/server.temp
