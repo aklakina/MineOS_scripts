@@ -21,6 +21,20 @@ if [[ $1 == "-c" ]]; then
 		rm $home/temp_ports.txt
 		chmod +rw $home/used_ports.txt
 	fi
+	for a in $(iptables --list)
+	do
+		if echo $a | cut -d " " -f1 | grep -q "ACCEPT"; then 
+			if echo $a | cut -d ":" -f2 | grep -q "255.*"; then
+				if cat $home/used_ports.txt | grep -q $(echo $a | cut -d ":" -f2); then
+					z=1
+				else
+					iptables -D INPUT -p tcp -m tcp --dport $(echo $a | cut -d ":" -f2) -j ACCEPT
+					iptables-save > /etc/iptables-rules
+					iptables-restore < /etc/iptables-rules
+				fi
+			fi
+		fi 
+	done
 else
 	echo "These are the server names with their ports:"
 	for i in $(cat $home/used_ports.txt)
