@@ -1,0 +1,9 @@
+spawn-protection=16
+gamemode=0
+difficulty=normal
+pvp=true
+level-type=default 
+max-players=20
+max-world-size=29999984
+view-distance=15
+level-seed=
