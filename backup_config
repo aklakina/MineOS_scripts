@@ -8,3 +8,22 @@ echo "Please define how old backups you want to keep: (in days)"
 read k
 echo $k >> /usr/local/bin/default_path.txt
 echo ""
+cd /var/games/minecraft/servers
+for a in $(ls -d */ | cut -d '/' -f1)
+do
+	echo "Do you want the server $a to be backed up? (y/n)"
+	b=0
+	while [[ $b -lt 1 ]]
+	do
+		read -n 1 k
+		if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
+			b=1
+			rm /var/games/minecraft/servers/$a/logs/nobackup
+		else
+			if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
+				b=1
+				touch /var/games/minecraft/servers/$a/logs/nobackup
+			fi
+		fi
+	done
+done

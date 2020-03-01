@@ -14,33 +14,37 @@ done
 cd /var/games/minecraft/servers
 for n in $(ls -d */ | cut -d '/' -f1)
 do
-	mkdir $backup_path/$n
-	cd $backup_path/$n
-	let "p1=$p+1"
-	if ls | grep -q "$p"; then
-		i=1
-		while [[ $i -lt $p1 ]]
-		do
-			let "i1=$i+1"
-			mv $backup_path/$n/$i $backup_path/$n/$i1
-			let "i=$i+1"
-		done
-		rm -rf $backup_path/$n/$p1
-		mkdir $backup_path/$n/1
-		tar -czf $backup_path/$n/1/$n.tar.gz /var/games/minecraft/servers/$n
+	if [ -f /var/games/minecraft/servers/$n/logs/nobackup ]; then
+		z=1
 	else
-		a=5
-		while [[ $a -gt 0 ]]
-		do
-			if ls | grep -q $a; then
-				z=1
-			else
-				mkdir $backup_path/$n/$a
-				tar -czf $backup_path/$n/$a/$n.tar.gz /var/games/minecraft/servers/$n
-				break
-			fi
-			let "a=$a-1"
-		done
+		mkdir $backup_path/$n
+		cd $backup_path/$n
+		let "p1=$p+1"
+		if ls | grep -q "$p"; then
+			i=1
+			while [[ $i -lt $p1 ]]
+			do
+				let "i1=$i+1"
+				mv $backup_path/$n/$i $backup_path/$n/$i1
+				let "i=$i+1"
+			done
+			rm -rf $backup_path/$n/$p1
+			mkdir $backup_path/$n/1
+			tar -czf $backup_path/$n/1/$n.tar.gz /var/games/minecraft/servers/$n
+		else
+			a=5
+			while [[ $a -gt 0 ]]
+			do
+				if ls | grep -q $a; then
+					z=1
+				else
+					mkdir $backup_path/$n/$a
+					tar -czf $backup_path/$n/$a/$n.tar.gz /var/games/minecraft/servers/$n
+					break
+				fi
+				let "a=$a-1"
+			done
+		fi
 	fi
 	#if [[ $change == "" ]]; then
 	#	gzip -r > $backup_path/$n/

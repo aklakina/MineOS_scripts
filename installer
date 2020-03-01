@@ -94,6 +94,28 @@ do
 									echo $k >> /usr/local/bin/default_path.txt
 									echo ""
 								fi
+								for a in $(ls -d */ | cut -d '/' -f1)
+								do
+									echo "Do you want the server $a to be backed up? (press enter if you want the previous settings) [y/n]"
+									b=0
+									while [[ $b -lt 1 ]]
+									do
+										read -n 1 k
+										if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
+											b=1
+											rm /var/games/minecraft/servers/$a/logs/nobackup
+										else
+											if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
+												b=1
+												touch /var/games/minecraft/servers/$a/logs/nobackup
+											else
+												if [[ "$k" == "" ]]; then
+													break
+												fi
+											fi
+										fi
+									done
+								done
 								echo "Please define which time interval should it run in the format of each x-th day"
 								read korte
 								while [[ $kortes -lt 29 ]]
