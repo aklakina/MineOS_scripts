@@ -2,15 +2,21 @@
 This repository contains my self-made scripts for MineOS node for linux made by hexparrot
 These scripts are my self-made linux shell scripts to make server owners' life easier and more comfortable.
 # A few words about my scripts:
-  You should first run the crontab_maker script first as root. It sets up every necessary crontab job for you.
+  So first of all if you decided to clone this repo then please run the installer as root. It asks for everything you need to run my scripts perfectly. ***Everything can be changed later on!*** From later on you just need to run the updater if you want to update the clone.
 
-  The data.txt is used in the start script and the starts is a command with arguments based editor for the data. (which needs some changes tho)
+  The data.txt is used in the start script and the starts is a command with arguments based editor for the data.
 
-  mc_command_handler should be started when the server starts up (but i couldn't get it to work that way so the user needs to start it manually as root) and it is safe for common usage since it runs every command in the name of the actual user who sends it to the console. If that user does not exist it simply writes he don't have permission to give commands to the main server.
+  mc_command_handler should be started when the server starts up (but i couldn't get it to work that way so the user needs to start it manually as root which the installer asks if you want to) and it is safe for common usage since it runs every command in the name of the actual user who sends it to the console. If that user does not exist it simply writes he don't have permission to give commands to the main server.
 
   memory_out just writes out the current memory usage of the mc servers and the max and the percent of course.
 
-  starts and memory_out should be in /bin (or any other path) so the user can reach them easily.
+  Starts is the argument based editor for the data.txt while start is the script that uses the data from the data.txt.
+  
+  Memory_controller is a script that prevents memory overflow (by restarting the server after a 2 minutes default countdown).
+  
+  Auto_backup is a configurable .tar.gz maker.
+
+  Server_prop_changer changes the properties file of every server so the user do not have to do it manually. Configurable.  
   
 # How do they work?
 memory_controller.sh is a simple script that checks the server processes and the actual memory usage compared to the max memory given in the webui's java arguments. If it hits 93% (it is configurable in the script by editing the line let "max_mem=$max_mem1*93/100" with changing the 93), then it writes out a 2 minutes countdown. After the 2 minutes countdown it restarts the server.
@@ -23,9 +29,9 @@ memory_out should be run by the actual user. It writes out current memory usage 
 
 mc_command_handler is used to make life "easier" in the view of server owners. This script tails the mc server log and if it catches any precise line that happens if you write #... in the minecraft chat then it tries to run the text after it as a linux command in the server and after that it pumps the output back to the minecraft chat. It does every command in your linux account name but because of that you have to log in to your minecraft server with your linux account name so this would work. I had to configure it that way so this script won't leave a black hole in your security system to like anyone who wants your server to their own. If you try to run a linux-side command as a non-linux user in mc then it will just drop back the text "you do not have the permission to run linux-side commands". Of course you can't give commands which waits for another input 'cause it simply will bug out and you will have to kill and restart the tailing process. If you are an expert enough then you could actually write a whole linux script using touch command. (**try it on your own responsibility**)
 
-status_checker is just controlling mc_command handler so it won't overflow your server with background jobs with infinite tailing processes.
+status_checker is just controlling mc_command handler so it won't overflow your server with background jobs with infinite tailing processes. ***Trust me it is better to keep this thing crontabbed...***
 
-Schedule a restart on change is exactly does that. If you change anything in the config/mods directory or change anything in the server.properties then this script asks for a time. You can give it as hh:mm 24-hour format and it does not work if you give a time that could only occour in another day. Like it is 12:45 and if you give it 11:00 it won't work. If everybody leaves the server the script will restart it automatically.
+Schedule a restart on change is exactly does that. If you change anything in the server.properties then this script checks for the default_timer.txt... well for time. You can give it as hh:mm 24-hour format or seconds. If everybody leaves the server the script will restart it automatically.
 
 Timer is the child script of the restart scheduler.
 
