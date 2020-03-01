@@ -13,10 +13,14 @@ if [[ $1 == "-c" ]]; then
 			iptables-restore < /etc/iptables-rules
 		fi
 	done
-	rm $home/used_ports.txt
-	cp $home/temp_ports.txt $home/used_ports.txt
-	rm $home/temp_ports.txt
-	chmod +rw $home/used_ports.txt
+	if [[ $(cat $home/temp_ports.txt) == "" ]]; then
+	z=1
+	else
+		rm $home/used_ports.txt
+		cp $home/temp_ports.txt $home/used_ports.txt
+		rm $home/temp_ports.txt
+		chmod +rw $home/used_ports.txt
+	fi
 else
 	echo "These are the server names with their ports:"
 	for i in $(cat $home/used_ports.txt)
