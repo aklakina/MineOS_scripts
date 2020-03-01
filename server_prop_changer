@@ -40,7 +40,7 @@ do
 			done
 			for a in $(cat $home/default_props.txt)
 			do
-				if echo $a | cut -d '=' -f1 | grep -q /var/games/minecraft/servers/$n/server.temp; then
+				if cat /var/games/minecraft/servers/$n/server.temp | grep -q $(echo $a | cut -d '=' -f1); then
 					z=1
 				else
 					echo $a >> /var/games/minecraft/servers/$n/server.temp
