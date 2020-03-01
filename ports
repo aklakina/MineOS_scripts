@@ -5,8 +5,12 @@ if [[ $1 == "-c" ]]; then
 	cd /var/games/minecraft/servers
 	for a in $home/used_ports.txt
 	do
-		if echo $a | cut -d "-" -f1 | grep -q $(ls -d */ | cut -d "/" -f1); then
+		if ls -d */ | cut -d "/" -f1 | grep -q $(echo $a | cut -d "-" -f1); then
 			echo $a >> temp_ports.txt
+		else
+			iptables -D INPUT -p tcp -m tcp --dport $(echo $a | cut -d "-" -f3) -j ACCEPT
+			iptables-save > /etc/iptables-rules
+			iptables-restore < /etc/iptables-rules
 		fi
 	done
 	rm $home/used_ports.txt

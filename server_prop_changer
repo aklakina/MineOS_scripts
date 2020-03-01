@@ -20,16 +20,16 @@ do
 					bool=1
 				fi
 			done
-			echo $port
 			for a in $(cat /var/games/minecraft/servers/$n/server.properties)
 			do
-				echo $a
 				if echo $a | grep -q "server-port"; then
 					a="$(echo $a | cut -d "=" -f1)=$port"
-					echo $a
 					echo $a >> /var/games/minecraft/servers/$n/server.temp
 					serverport="$n--$port"
 					echo $serverport >> $home/used_ports.txt
+					iptables -A INPUT -p tcp -m tcp --dport $port -j ACCEPT
+					iptables-save > /etc/iptables-rules
+					iptables-restore < /etc/iptables-rules
 				else
 					if echo $a | cut -d "=" -f1 | grep -q $home/default_props.txt; then
 						cat $home/default_props.txt | grep $( echo $a | cut -d '=' -f1) >> /var/games/minecraft/servers/$n/server.temp
