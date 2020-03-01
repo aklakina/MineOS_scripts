@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "Please define the default backup path:"
+read backup_path
+echo $backup_path > /usr/local/bin/default_path.txt
+echo ""
+echo "Please define how old backups you want to keep: (in days)"
+read k
+echo $k >> /usr/local/bin/default_path.txt
+echo ""

@@ -1,55 +1,82 @@
 #!/bin/bash
 
 home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
-PATH="$PATH:/usr/games/minecraft"
 t=$(cat $home/default_backup.txt)
 let "t=$t-1"
-for m in {backup,archive}
+for a in $(cat /usr/local/bin/default_path.txt)
 do
-	cd /var/games/minecraft/servers
-	for n in $(ls -d */ | cut -d '/' -f1)
-	do
-#		change=$(stat /var/games/minecraft/$m/$n | grep "Change:" | cut -d ":" -f2 | cut -d ' ' -f1)
-#		if [[ $change == "" ]]; then
-		mineos_console.js -s $n $m
-#		else
-#			if [[ $(echo $change | cut -d '-' -f1) == $(date +%Y) ]]; then
-#				if [[ $(echo $change | cut -d '-' -f2) == $(date +%m) ]]; then
-#					if [[ $(echo $change | cut -d '-' -f3) == $(date +%d) ]]; then
-#						z=1
-#					else
-#						let "a=-$(echo $change | cut -d '-' -f3)+$(date +%d)"
-#						if [[ $a -gt $t ]]; then
-#							mineos_console.js -s $n $m
-#						fi
-#					fi
-#				else
-#					let "b=-$(echo $change | cut -d '-' -f2)+$(date +%m)"
-#					if [[ $b -lt 2 ]]; then
-#						let "c=-$(echo $change | cut -d '-' -f3)+30+$(date +%d)"
-#						if [[ $c -gt $t ]]; then
-#							mineos_console.js -s $n $m
-#							fi
-#					else
-#						mineos_console.js -s $n $m
-#					fi
-#				fi
-#			else
-#				let "d=-$(echo $change | cut -d '-' -f1)+$(date +%Y)"
-#				if [[ $d -lt 2 ]]; then
-#					let "b=-$(echo $change | cut -d '-' -f2)+$(date +%m)+12"
-#					if [[ $b -lt 2 ]]; then
-#						let "c=-$(echo $change | cut -d '-' -f3)+30+$(date +%d)"
-#						if [[ $c -gt $t ]]; then
-#							mineos_console.js -s $n $m
-#						fi
-#					else
-#						mineos_console.js -s $n $m
-#					fi
-#				else
-#					mineos_console.js -s $n $m
-#				fi
-#			fi
-#		fi
-	done
+	if echo $a | grep -q "/"; then
+		backup_path=$a
+	else
+		p=$a
+	fi
+done
+cd /var/games/minecraft/servers
+for n in $(ls -d */ | cut -d '/' -f1)
+do
+	cd $backup_path/$n
+	let "p1=$p+1"
+	if ls | grep -q "$p"; then
+		i=1
+		while [[ $i -lt $p1 ]]
+		do
+			let "i1=$i+1"
+			mv $backup_path/$n/$i $backup_path/$n/$i1
+			let "i=$i+1"
+		done
+		rm -rf $backup_path/$n/$p1
+		tar -czf $backup_path/$n/1/$n.tar.gz /var/games/minecraft/servers/$n
+	else
+		a=1
+		while [[ $a -lt $p1 ]]
+		do
+			if ls | grep -q $a; then
+				z=1
+			else
+				tar -czf $backup_path/$n/$a/$n.tar.gz /var/games/minecraft/servers/$n
+			fi
+			let "a=$a+1"
+		done
+	fi
+	#if [[ $change == "" ]]; then
+	#	gzip -r > $backup_path/$n/
+	#else
+	#	if [[ $(echo $change | cut -d '-' -f1) == $(date +%Y) ]]; then
+	#		if [[ $(echo $change | cut -d '-' -f2) == $(date +%m) ]]; then
+	#			if [[ $(echo $change | cut -d '-' -f3) == $(date +%d) ]]; then
+	#				z=1
+	#			else
+	#				let "a=-$(echo $change | cut -d '-' -f3)+$(date +%d)"
+	#				if [[ $a -gt $t ]]; then
+	#					mineos_console.js -s $n $m
+	#				fi
+	#			fi
+	#		else
+	#			let "b=-$(echo $change | cut -d '-' -f2)+$(date +%m)"
+	#			if [[ $b -lt 2 ]]; then
+	#				let "c=-$(echo $change | cut -d '-' -f3)+30+$(date +%d)"
+	#				if [[ $c -gt $t ]]; then
+	#					mineos_console.js -s $n $m
+	#					fi
+	#			else
+	#				mineos_console.js -s $n $m
+	#			fi
+	#		fi
+	#	else
+	#		let "d=-$(echo $change | cut -d '-' -f1)+$(date +%Y)"
+	#		if [[ $d -lt 2 ]]; then
+	#			let "b=-$(echo $change | cut -d '-' -f2)+$(date +%m)+12"
+	#			if [[ $b -lt 2 ]]; then
+	#				let "c=-$(echo $change | cut -d '-' -f3)+30+$(date +%d)"
+	#				if [[ $c -gt $t ]]; then
+	#					mineos_console.js -s $n $m
+	#				fi
+	#			else
+	#				mineos_console.js -s $n $m
+	#			fi
+	#		else
+	#			mineos_console.js -s $n $m
+	#		fi
+	#	fi
+	#fi
 done

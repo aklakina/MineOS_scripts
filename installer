@@ -72,6 +72,17 @@ do
 						if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
 							z=1
 							if [[ $a == "auto_backup" ]]; then
+								touch /usr/local/bin/default_path.txt
+								if [[ $(cat /usr/local/bin/default_path.txt) == "" ]]; then
+									echo "Please define the default backup path:"
+									read backup_path
+									echo $backup_path > /usr/local/bin/default_path.txt
+									echo ""
+									echo "Please define how old backups you want to keep: (in days)"
+									read k
+									echo $k >> /usr/local/bin/default_path.txt
+									echo ""
+								fi
 								echo "Please define which time interval should it run in the format of each x-th day"
 								read korte
 								while [[ $kortes -lt 29 ]]
