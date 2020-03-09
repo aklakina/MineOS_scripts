@@ -29,6 +29,7 @@ let "a=30-$i"
 sleep 1
 done
 ./mineos_console.js -s $name restart
+rm /var/games/minecraft/servers/$name/logs/restarting
 fi)&
 fi
 fi

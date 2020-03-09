@@ -1,6 +1,10 @@
 #!/bin/bash
 
+home=$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )
+IFS=$'\n'
 msg="$1"
 msg_content=\"$msg\"
-url='https://discordapp.com/api/webhooks/685071395666788352/R9b5EKCHqT2Gkm9I8w5wcALDno3dlRlt6I_0nnzhlLWyjt7m4FNNOU1UygOuTTLyf6zZ'
+for url in $(cat $home/url.txt)
+do
 curl -H "Content-Type: application/json" -X POST -d "{\"content\": $msg_content}" $url
+done

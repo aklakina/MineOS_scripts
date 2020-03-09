@@ -56,6 +56,17 @@ do
 			chmod +x /usr/local/bin/$a
 		done
 		chmod +x $(ls)
+		z=0
+		echo "Please define a webhook url for the discord channel you want the notifications to be pushed in.(You can define more then one and if you are done press Enter!)"
+		while [[ $z -lt 1 ]]
+		do
+			read k
+			if [[ $k == "" ]]; then
+				z=1
+			else
+				echo $k>>$home/url.txt
+			fi
+		done
 		echo "Your clone is now updated/installed!"
 	else
 		if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
@@ -172,6 +183,17 @@ do
 			done
 			chmod +x $(ls)
 			echo " "
+			z=0
+			echo "Please define a webhook url for the discord channel you want the notifications to be pushed in.(You can define more then one and if you are done press Enter!)"
+			while [[ $z -lt 1 ]]
+			do
+				read k
+				if [[ $k == "" ]]; then
+					z=1
+				else
+					echo $k>>$home/url.txt
+				fi
+			done
 			echo "Your clone is now updated/installed!"
 		fi
 	fi

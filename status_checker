@@ -8,6 +8,7 @@ name=$(echo $oname | cut -d '/' -f1)
 if $(/usr/games/minecraft/mineos_console.js -s $name up | tr -s ' ' | cut -d ' ' -f5); then
 			if [ -f /var/games/minecraft/servers/$name/logs/notup ]; then
 				rm /var/games/minecraft/servers/$name/logs/notup
+				$home/notifier "**$name is running.**"
 			fi
 		else
 			touch /var/games/minecraft/servers/$name/logs/notup
@@ -17,6 +18,7 @@ if $(/usr/games/minecraft/mineos_console.js -s $name up | tr -s ' ' | cut -d ' '
 					kill $i
 				done
 				rm  /var/games/minecraft/servers/$name/logs/running
+				$home/notifier "***$name is down!***"
 			fi
 		fi
 	done

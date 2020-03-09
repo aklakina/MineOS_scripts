@@ -1,0 +1,23 @@
+#!/bin/bash
+
+home=$(cat /usr/local/bin/home)
+IFS=$'\n'
+cd /var/games/minecraft/servers
+while (true)
+do
+	for n in $(ls -d */ | cut -d '/' -f1)
+	do
+		if [ -f /var/games/minecraft/servers/$n/logs/listening ] || [ -f /var/games/minecraft/servers/$n/logs/notup ]; then
+			z=1
+		else
+			touch /var/games/minecraft/servers/$n/logs/listening
+			(if tail -F -n 0 /var/games/minecraft/servers/$n/logs/latest.log | grep -q ".*Server thread/INFO.*joined the game.*"; then 
+				log_line=$(tail -n 1 /var/games/minecraft/servers/$name/logs/latest.log)
+				user=${log_line%%joined*}
+				user=${user##*:}
+				$home/notifier "***$user*** joined the ***$n*** server."
+				rm /var/games/minecraft/servers/$n/logs/listening
+			fi)&
+		fi
+	done
+done
