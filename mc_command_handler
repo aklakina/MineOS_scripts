@@ -12,7 +12,13 @@ do
 		if [ -f /var/games/minecraft/servers/$name/logs/running ] || [ -f /var/games/minecraft/servers/$name/logs/notup ]; then
 			z=1
 		else
-			touch /var/games/minecraft/servers/$name/logs/running
+			if [ -d /var/games/minecraft/servers/$name/logs ]; then 
+				touch /var/games/minecraft/servers/$name/logs/running
+			else
+				mkdir /var/games/minecraft/servers/$name/logs
+				chmod a+rwx /var/games/minecraft/servers/$name/logs
+				touch /var/games/minecraft/servers/$name/logs/running
+			fi
 			(if tail -F -n 0 /var/games/minecraft/servers/$name/logs/latest.log | grep -q ".*Server thread/INFO.* <.*> #"; then 
 				user=$(tail -n 1 /var/games/minecraft/servers/$name/logs/latest.log | cut -d '<' -f2 | cut -d '>' -f1)
 				if id "$user" >/dev/null 2>&1; then

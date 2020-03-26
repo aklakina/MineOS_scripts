@@ -102,6 +102,12 @@ do
 			cp /var/games/minecraft/servers/$n/server.temp /var/games/minecraft/servers/$n/server.properties
 			rm /var/games/minecraft/servers/$n/server.temp
 			chmod a+rwx /var/games/minecraft/servers/$n/server.properties
+			if [ -d  /var/games/minecraft/servers/$n/logs ]; then
+				z=1
+			else
+				mkdir /var/games/minecraft/servers/$n/logs
+				chmod a+rwx /var/games/minecraft/servers/$n/logs
+			fi
 			touch /var/games/minecraft/servers/$n/logs/ran
 		fi
 	done

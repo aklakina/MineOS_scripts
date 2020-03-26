@@ -1,6 +1,6 @@
 #!/bin/bash
 
-home=/var/games/minecraft
+home=$(cat /usr/local/bin/home)
 cd /usr/games/minecraft
 for name in $(cat /var/games/minecraft/data.txt)
 do
