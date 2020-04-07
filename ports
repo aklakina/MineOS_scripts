@@ -4,7 +4,7 @@ home=$(cat /usr/local/bin/home)
 IFS=$'\n'
 if [[ $1 == "-c" ]]; then
 	cd /var/games/minecraft/servers
-	for a in $home/used_ports.txt
+	for a in $(cat $home/used_ports.txt)
 	do
 		if ls -d */ | cut -d "/" -f1 | grep -q $(echo $a | cut -d "-" -f1); then
 			echo $a >> temp_ports.txt
