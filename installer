@@ -207,6 +207,7 @@ do
 				while [[ $z -lt 1 ]]
 				do
 					read -n 1 k
+					echo " "
 					if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
 						z=1
 						rm $home/url.txt
@@ -228,6 +229,7 @@ z=0
 while [[ z -lt 1 ]]
 do
 	read -n 1 k
+	echo " "
 	if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
 		z=1
 		for i in $(ps -eaf | grep "$(ps -eaf | grep "/var/games/minecraft/servers/.*/logs" | tr -s ' ' | cut -d ' ' -f3)" | tr -s ' ' | cut -d ' ' -f2)
@@ -244,10 +246,11 @@ do
 done
 if cat $home/default_props.txt | grep -q "server-ip="; then
 	z=0
-	echo "You have already set up your servers ip. Do you want to reset it?"
+	echo "You have already set up your servers ip. Do you want to reset it?[Y/N]"
 	while [[ z -lt 1 ]]
 	do
 		read -n 1 k
+		echo " "
 		if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
 			z=1
 			cp $home/default_props.txt $home/temp_default_props.txt
@@ -277,13 +280,15 @@ if cat $home/default_props.txt | grep -q "server-ip="; then
 else
 	echo "Please write here your server's ip:"
 	read k
-	echo $k>>$home/default_props.txt
+	echo " "
+	echo "server-ip=$k">>$home/default_props.txt
 fi
 echo "Do you want to start server_prop_changer? (If it already ran then this will restart it) [Y/N]"
 z=0
 while [[ z -lt 1 ]]
 do
 	read -n 1 k
+	echo " "
 	if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
 		z=1
 		for i in $(ps -eaf | grep "$(ps -eaf | grep "/var/games/minecraft/servers/.*/ran" | tr -s ' ' | cut -d ' ' -f3)" | tr -s ' ' | cut -d ' ' -f2)
