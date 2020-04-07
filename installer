@@ -274,6 +274,10 @@ if cat $home/default_props.txt | grep -q "server-ip="; then
 			fi
 		fi
 	done
+else
+	echo "Please write here your server's ip:"
+	read k
+	echo $k>>$home/default_props.txt
 fi
 echo "Do you want to start server_prop_changer? (If it already ran then this will restart it) [Y/N]"
 z=0
