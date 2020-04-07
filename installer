@@ -164,8 +164,8 @@ do
 			echo "Please define for each script if you want them in your default path folder so you will be able to call them just by their name in the terminal."
 			for a in $(cat $home/to_the_bin.txt)
 			do
-				k=$(sha1sum /usr/local/bin/$a)
-				o=$(sha1sum $home/$a)
+				k=$(sha1sum /usr/local/bin/$a | cut -d ' ' -f1)
+				o=$(sha1sum $home/$a | cut -d ' ' -f1)
 				if [[ "$k" == "$o" ]]; then
 					l=1
 				else
