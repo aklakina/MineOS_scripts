@@ -184,8 +184,8 @@ do
 								z=1
 							fi
 						fi
-					fi
-				done
+					done
+				fi
 			done
 			if [[ $(cat $home/url.txt) == "" ]]; then
 				chmod +x $(ls)
