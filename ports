@@ -7,15 +7,20 @@ if [[ $1 == "-c" ]]; then
 	for a in $(cat $home/used_ports.txt)
 	do
 		if ls -d */ | cut -d "/" -f1 | grep -q $(echo $a | cut -d "-" -f1); then
-			echo $a >> temp_ports.txt
+			echo $a >> $home/temp_ports.txt
 		else
 			iptables -D INPUT -p tcp -m tcp --dport $(echo $a | cut -d "-" -f3) -j ACCEPT
 			iptables-save > /etc/iptables-rules
 			iptables-restore < /etc/iptables-rules
 		fi
 	done
+	for a in $(ls -d */ | cut -d '/' -f1)
+	do
+		h=$(cat /var/games/minecraft/servers/$a/server.properties | grep "port" | cut -d "=" -f2)
+		l="$a-$h"
+		echo $l >> $home/temp_ports.txt
 	if [[ $(cat $home/temp_ports.txt) == "" ]]; then
-	z=1
+		z=1
 	else
 		rm $home/used_ports.txt
 		cp $home/temp_ports.txt $home/used_ports.txt
