@@ -16,7 +16,7 @@ if [[ $1 == "-c" ]]; then
 	done
 	for a in $(ls -d */ | cut -d '/' -f1)
 	do
-		h=$(cat /var/games/minecraft/servers/$a/server.properties | grep "port" | cut -d "=" -f2)
+		h=$(cat /var/games/minecraft/servers/$a/server.properties | grep "port" | cut -d "=" -f2 | cut -d ' ' -f1)
 		l="$a-$h"
 		echo $l >> $home/temp_ports.txt
 	done
