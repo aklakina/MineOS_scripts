@@ -203,7 +203,7 @@ do
 				done
 			else
 				z=0
-				echo "You already have entered a discord webhook. Do you want to add another one or replace the existing one?"
+				echo "You already have entered a discord webhook. Do you want to add another one or replace the existing one? [Y/N]"
 				while [[ $z -lt 1 ]]
 				do
 					read -n 1 k
