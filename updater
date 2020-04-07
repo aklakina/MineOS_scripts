@@ -9,14 +9,13 @@ chmod -wx /usr/local/bin/home
 cd $home
 cp $home/default_props.txt $home/../default_props.txt
 cp $home/default_timer.txt $home/../default_timer.txt
-cp $home/default_props.txt $home/../default_props.txt
 git fetch --all
 git reset --hard origin/master
 chmod +x $home/default_props.txt
 chmod +x $home/default_timer.txt
-chmod +x $home/default_props.txt
 rm $home/default_props.txt
 rm $home/default_timer.txt
-rm $home/default_props.txt
+mv $home/../default_props.txt $home/default_props.txt
+mv $home/../default_timer.txt $home/default_timer.txt
 chmod +x $home/installer
 $home/installer
