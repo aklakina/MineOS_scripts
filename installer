@@ -164,40 +164,65 @@ do
 			echo "Please define for each script if you want them in your default path folder so you will be able to call them just by their name in the terminal."
 			for a in $(cat $home/to_the_bin.txt)
 			do
+				k=$(sha1sum /usr/local/bin/$a)
+				o=$(sha1sum $home/$a)
+				if [[ "$k" == "$o" ]]; then
+					l=1
+				else
+					echo " "
+					echo "$a?(Y/N)"
+					z=0
+					while [[ z -lt 1 ]]
+					do
+						read -n 1 k
+						if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
+							z=1
+							cp $home/$a /usr/local/bin/$a
+							chmod +x /usr/local/bin/$a
+						else
+							if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
+								z=1
+							fi
+						fi
+					fi
+				done
+			done
+			if [[ $(cat $home/url.txt) == "" ]]; then
+				chmod +x $(ls)
 				echo " "
-				echo "$a?(Y/N)"
 				z=0
-				while [[ z -lt 1 ]]
+				echo "Please define a webhook url for the discord channel you want the notifications to be pushed in.(You can define more then one and if you are done press Enter!)"
+				while [[ $z -lt 1 ]]
+				do
+					read k
+					if [[ $k == "" ]]; then
+						z=1
+					else
+						echo $k>>$home/url.txt
+					fi
+				done
+			else
+				z=0
+				echo "You already have entered a discord webhook. Do you want to add another one or replace the existing one?"
+				while [[ $z -lt 1 ]]
 				do
 					read -n 1 k
 					if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
 						z=1
-						cp $home/$a /usr/local/bin/$a
-						chmod +x /usr/local/bin/$a
+						rm $home/url.txt
+						read o
+						echo $o>>$home/url.txt
 					else
 						if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
 							z=1
 						fi
 					fi
 				done
-			done
-			chmod +x $(ls)
-			echo " "
-			z=0
-			echo "Please define a webhook url for the discord channel you want the notifications to be pushed in.(You can define more then one and if you are done press Enter!)"
-			while [[ $z -lt 1 ]]
-			do
-				read k
-				if [[ $k == "" ]]; then
-					z=1
-				else
-					echo $k>>$home/url.txt
-				fi
-			done
-			echo "Your clone is now updated/installed!"
+			fi
 		fi
 	fi
 done
+echo "Your clone is now updated/installed!"
 echo "Do you want to start mc_command_handler? (If it already ran then this will restart it) [Y/N]"
 z=0
 while [[ z -lt 1 ]]
@@ -217,9 +242,39 @@ do
 		fi
 	fi
 done
-echo "Please write here your ip"
-read k
-echo "server-ip=$k" >> $home/default_props.txt
+if cat $home/default_props.txt | grep -q "server-ip="; then
+	z=0
+	echo "You have already set up your servers ip. Do you want to reset it?"
+	while [[ z -lt 1 ]]
+	do
+		read -n 1 k
+		if [[ "$k" == "y" ]] || [[ "$k" == "Y" ]]; then
+			z=1
+			cp $home/default_props.txt $home/temp_default_props.txt
+			rm $home/default_props.txt
+			cd /var/games/minecraft/servers/
+			for a in $(ls -d */ | cut -d '/' -f1)
+			do
+				rm /var/games/minecraft/servers/$a/logs/ran
+			done
+			for i in $(cat $home/temp_default_props.txt)
+			do
+				if $i | grep -q "server-ip="; then
+					z=1
+				else
+					echo $i>>$home/default_props.txt
+				fi
+			done
+			echo "Please write here your new ip"
+			read k
+			echo "server-ip=$k" >> $home/default_props.txt
+		else
+			if [[ "$k" == "n" ]] || [[ "$k" == "N" ]]; then
+				z=1
+			fi
+		fi
+	done
+fi
 echo "Do you want to start server_prop_changer? (If it already ran then this will restart it) [Y/N]"
 z=0
 while [[ z -lt 1 ]]
