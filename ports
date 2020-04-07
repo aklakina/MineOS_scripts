@@ -19,6 +19,7 @@ if [[ $1 == "-c" ]]; then
 		h=$(cat /var/games/minecraft/servers/$a/server.properties | grep "port" | cut -d "=" -f2)
 		l="$a-$h"
 		echo $l >> $home/temp_ports.txt
+	done
 	if [[ $(cat $home/temp_ports.txt) == "" ]]; then
 		z=1
 	else
