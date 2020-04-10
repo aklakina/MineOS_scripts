@@ -9,6 +9,8 @@ else
 	echo $home > /usr/local/bin/home
 fi
 chmod -wx /usr/local/bin/home
+cd $home
+chmod a+x $(ls $home)
 echo "Do you want to install all of the components?(Y/N)"
 while [[ z -lt 1 ]]
 do
@@ -53,7 +55,7 @@ do
 		for a in $(cat $home/to_the_bin.txt)
 		do
 			cp $home/$a /usr/local/bin/$a
-			chmod +x /usr/local/bin/$a
+			chmod a+x /usr/local/bin/$a
 		done
 		chmod +x $(ls)
 		z=0
