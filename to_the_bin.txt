@@ -4,3 +4,4 @@ updater
 status_checker
 ports
 backup_config
+create_server
