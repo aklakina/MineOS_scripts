@@ -1,0 +1,45 @@
+#!/bin/bash
+
+IFS=$'\n'
+
+cd /var/games/minecraft/import
+mkdir ./temp
+chmod a+rwx ./temp
+if [ -z $1 ]; then
+	echo "The first argument should be the download link and the second should be the action with the archive. Please copy the download link and write -c for creating the server from it instantly or -d for only donwloading it. Please note that -c requires 2 other arguments first the name of the new server and last is the username of in whose name should the server be."
+	exit
+elif [ -n $1 ]; then
+	link=\"$1\"
+	if [[ $2 == "-c" ]] && ( [ -z $3 ] || [ -z $4 ] ); then
+		echo "Please define two more arguments from which the first one should be the name of the server and the second one should be the username of who creating it."
+		exit
+	elif [[ $2 == "-c" ]] && [ -f /var/games/minecraft/import/temp/onit ]; then
+		while (true)
+		do
+			if !([ -f /var/games/minecraft/import/temp/onit ]); then
+				break
+			fi
+			echo "Waiting for another download and/or install to complete."
+			sleep 5
+		done
+	elif [[ $2 == "-c" ]]; then
+		cd ./temp
+		touch ./onit
+		wget "$link"
+		name=$(ls)
+		chmod a+rwx ./$name
+		cd /var/games/minecraft/servers
+		uname=$(cat /etc/passwd | grep "$4" | cut -d ":" -f3):$(cat /etc/passwd | grep "$4" | cut -d ":" -f4)
+		/usr/games/minecraft/mineos_console.js -s "$3" create_from_archive $uname "/var/games/minecraft/import/temp/$name"
+		cd /var/games/minecraft/servers/$3
+		if ls | grep -q "${$name%.zip}"; then
+			mv -v /var/games/minecraft/servers/$3/"${$name%.zip}"/* /var/games/minecraft/servers/$3/
+		fi
+		rm ./onit
+		echo "The installation has finished."
+	elif [[ $2 != "-c" ]] && [[ $2 == "-d" ]]; then
+		cd /var/games/minecraft/import
+		wget '$link'
+		echo "The download has finished."
+	fi
+fi
